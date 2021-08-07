@@ -1,0 +1,53 @@
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: [ '1.13', '1.12', '1.11' ]
+    name: Go ${{ matrix.go }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install GNU Make and gzip
+        shell: bash
+        run: |-
+          sudo apt -y install make
+          sudo apt -y install gzip
+
+      - name: Setup Go environment
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Get system information
+        shell: bash
+        run: |-
+          uname -a
+          date -R
+          make --version
+          gzip --version
+          go version
+
+      - name: Build
+        shell: bash
+        run: |-
+          make configure
+          make
+          make clean
+
+      - name: Test
+        shell: bash
+        run: |-
+          make configure
+          make test
+          make clean
