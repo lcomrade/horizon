@@ -1,0 +1,208 @@
+/*
+   Copyright 2021 Leonid Maslakov
+
+   License: GPL-3.0-or-later
+
+   This file is part of Horizon.
+
+   Horizon is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Horizon is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Horizon.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+package settings
+
+import (
+	"../build"
+	"../logger"
+	"encoding/json"
+	"flag"
+	"fmt"
+	"html/template"
+	"os"
+	"path/filepath"
+)
+
+// ## CONFIG CONTENT ##
+//Used to read a configuration file
+type ConfigType struct {
+	HttpServer HttpServerType
+}
+
+type HttpServerType struct {
+	Listen    string
+	EnableTLS bool
+	CertFile  string
+	KeyFile   string
+}
+
+//Default configuration
+var ConfigDefault = ConfigType{
+	HttpServer: HttpServerType{
+		Listen:    ":8080",
+		EnableTLS: false,
+		CertFile:  "",
+		KeyFile:   "",
+	},
+}
+
+//Get the path to the file. Can return an empty string.
+func GetFilePath(fileName string) string {
+	if *ArgConfigDir != "" {
+		_, err := os.Stat(*ArgConfigDir + fileName)
+		if err == nil {
+			logger.Info.Println("Load file: " + *ArgConfigDir + fileName)
+			return *ArgConfigDir + fileName
+		}
+		logger.Info.Println(err)
+	}
+
+	//Checking the USER path for the location of the config file
+	for true {
+		//Getting HOME environment variable
+		variableHOME := os.Getenv(build.UserHomeEnvVar)
+		if variableHOME == "" {
+			logger.Warning.Println(build.UserHomeEnvVar + " environment variable is empty")
+			break
+		}
+
+		//Full path to file
+		userFullPath := filepath.Clean(variableHOME + "/" + build.UserConfigDir + "/" + fileName)
+
+		//Checking the existence of a file
+		_, err := os.Stat(userFullPath)
+		if err == nil {
+			return userFullPath
+		}
+		break
+	}
+
+	//Checking the SYSTEM path of the config file
+	sysFullPath := filepath.Clean(build.SysConfigDir + "/" + fileName)
+	_, err := os.Stat(sysFullPath)
+	if err == nil {
+		return sysFullPath
+	}
+
+	//If both paths are wrong it returns an empty string
+	return ""
+}
+
+//Read a configuration file
+func ReadConfig(configFilePath string) ConfigType {
+	//Getting the default configuration
+	config := ConfigDefault
+
+	//If an empty string is received, return the default value
+	if configFilePath == "" {
+		return config
+	}
+
+	//Reading a configuration file
+	configFile, err := os.Open(configFilePath)
+	if err != nil {
+		logger.Warning.Println(err)
+		return config
+	}
+
+	//Decoding a configuration file
+	jsonParser := json.NewDecoder(configFile)
+	err = jsonParser.Decode(&config)
+	if err != nil {
+		logger.Warning.Println(err)
+		return config
+	}
+
+	return config
+}
+
+//Loads an HTML page template into RAM
+func GetHtmlPageTemplate(indexHtmlFilePath string) *template.Template {
+	//Custom template found
+	if indexHtmlFilePath != "" {
+
+		//Reading the html page template
+		htmlPageTemplate, err := template.ParseFiles(indexHtmlFilePath)
+		if err != nil {
+			logger.Error.Fatal(err)
+		} else {
+			return htmlPageTemplate
+		}
+	}
+
+	//The custom template is missing
+	htmlPageTemplate := template.New("")
+
+	//Default template
+	templateDefault :=
+		`<!doctype html>
+	<html>
+		<head>
+			<meta charset="utf-8">
+			<title>{{.Path}} - Horizon</title>
+		</head>
+		<body>
+			<h2>{{.Path}}</h2>
+			<p><a href={{.UpPath}}>Go top</a></p>
+			<table align='left' border=1 cellpadding=5>
+				<th align='left'>Name</th>
+				<th align='left'>Size (bit)</th>
+				<th align='left'>Mode</th>
+				<th align='left'>Modification time</th>
+				<th align='left'>Owner</th>
+				<th align='left'>Group</th>
+
+				{{range .Files}}
+				<tr>
+					<td><a href={{.Path}}>{{.Name}}</a></td>
+					<td>{{.Size}}</td>
+					<td>{{.Mode}}</td>
+					<td>{{.ModTime}}</td>
+					<td>{{.Owner}} ({{.Uid}})</td>
+					<td>{{.Group}} ({{.Gid}})</td>
+				</tr>
+				{{end}}
+					
+			</table>
+		</body>
+	</html>`
+
+	htmlPageTemplate.Parse(templateDefault)
+
+	return htmlPageTemplate
+}
+
+//Global vars
+var ArgDir *string
+var ArgConfigDir *string
+var Config ConfigType
+var HtmlTemplate *template.Template
+
+func init() {
+	//Flags
+	ArgDir = flag.String("dir", ".", "Specifies the custom directory")
+	ArgConfigDir = flag.String("config-dir", "", "Specifies the custom directory with configuration files")
+	argVersion := flag.Bool("version", false, "Display version and exit")
+	flag.Parse()
+
+	//Displaying the version
+	if *argVersion == true {
+		fmt.Println("Horizon", build.Version)
+		os.Exit(0)
+	}
+
+	//Reading a configuration file
+	Config = ReadConfig(GetFilePath("config.json"))
+
+	//WEB
+	HtmlTemplate = GetHtmlPageTemplate(GetFilePath("index.tmpl"))
+}

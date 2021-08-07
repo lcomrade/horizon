@@ -1,0 +1,65 @@
+.TH "HORIZON-CONFIGS" "5" "05.08.2021" "Horizon 0.1" "Horizon Configuration File Guide"
+.SH  NAME
+Horizon \- configuration file guide
+.PP
+.SH  FILES
+Horizon uses the configuration files located in the \fB$HOME/.config/horizon/\fR and \fB/etc/horizon/\fR directories. List of configuration files:
+.PP
+\fBconfig.json\fR
+    Contains the basic settings. For example: the port on which the server will run.
+.PP
+\fBindex.tmpl\fR
+    Contains the template of the html page that will be displayed in the browser.
+.PP
+.SH  config.json
+Here is an example of a configuration file with all default values.
+.PP
+.nf
+{
+  "HttpServer": {
+    "Listen":    ":8080",
+    "EnableTLS": false,
+    "CertFile":  "",
+    "KeyFile":   ""
+  }
+}
+.fi
+.PP
+.SH  index.tmpl
+If you want to write your own HTML page template, use the GO documentation: \fBhttps://pkg.go.dev/html/template\fR . The example below shows the default template.
+.PP
+.nf
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{.Path}} - Horizon</title>
+  </head>
+  <body>
+    <h2>{{.Path}}</h2>
+    <p><a href={{.UpPath}}>Go top</a></p>
+    <table align='left' border=1 cellpadding=5>
+      <th align='left'>Name</th>
+      <th align='left'>Size (bit)</th>
+      <th align='left'>Mode</th>
+      <th align='left'>Modification time</th>
+      <th align='left'>Owner</th>
+      <th align='left'>Group</th>
+      {{range .Files}}
+      <tr>
+        <td><a href={{.Path}}>{{.Name}}</a></td>
+        <td>{{.Size}}</td>
+        <td>{{.Mode}}</td>
+        <td>{{.ModTime}}</td>
+        <td>{{.Owner}} ({{.Uid}})</td>
+        <td>{{.Group}} ({{.Gid}})</td>
+      </tr>
+      {{end}}
+    </table>
+  </body>
+</html>
+.fi
+.PP
+.SH  SEE ALSO
+\fBhorizon\fR(1)
+.PP

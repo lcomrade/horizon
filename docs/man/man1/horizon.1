@@ -1,0 +1,31 @@
+.TH "HORIZON" "1" "05.08.2021" "Horizon 0.1" "Horizon Manual"
+.SH  NAME
+Horizon \- minimalist WEB-server for data transfer via HTTP
+.PP
+.SH  DESCRIPTION
+Horizon is a simple program that performs the single function of transferring data using the HTTP protocol. Despite its simplicity, it supports TLS encryption and a custom HTTP page template.
+.PP
+The program comes as a single binary file and can easily be ported to a UNIX-like system that has a GO compiler.
+.PP
+.SH  SYNOPSIS
+horizon [-config-dir] [-dir] [-version]
+.PP
+.SH  OPTIONS
+-config-dir
+    Specifies the custom directory with configuration files
+.PP
+-dir
+    Specifies the custom root directory of the WEB server. Default: "."
+.PP
+-version
+    Display version and exit
+.PP
+.SH  FILES
+The location of the configuration files is described in detail in the \fBFILES\fR section of the \fBhorizon-configs\fR(5) manual.
+.PP
+.SH  BUGS
+It was too time consuming to post information about every bug found here, but if you want to know about existing bugs or report a bug you can use this URL: \fBhttps://github.com/lcomrade/horizon/issues\fR
+.PP
+.SH  SEE ALSO
+\fBhorizon-configs\fR(5)
+.PP
