@@ -9,6 +9,19 @@ import (
 
 var testDirRoot = "/tmp/horizon_test"
 
+//Runs the Main() function only once
+//This is all for compatibility with Go >= 1.13
+//See 1: https://github.com/golang/go/issues/31859
+//See 2: https://github.com/golang/go/issues/33774
+var mainRun = false
+
+func MakeMain() {
+	if mainRun == false {
+		Main()
+		mainRun = true
+	}
+}
+
 //Delete the files used for testing
 func MakeClean() {
 	err := os.RemoveAll(testDirRoot)
@@ -20,6 +33,8 @@ func MakeClean() {
 //TEST: Search for configuration files
 func TestGetFilePath(t *testing.T) {
 	MakeClean()
+	MakeMain()
+
 	//Setting up paths
 	err := os.Setenv("HOME_HORIZON_TEST", testDirRoot)
 	if err != nil {
@@ -77,6 +92,7 @@ func TestGetFilePath(t *testing.T) {
 //TEST: Reading a configuration file
 func TestReadConfig(t *testing.T) {
 	MakeClean()
+	MakeMain()
 
 	// ## Blank line instead of the config file path
 	configOut := ReadConfig("")

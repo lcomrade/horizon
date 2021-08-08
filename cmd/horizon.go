@@ -146,6 +146,10 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func init() {
+	settings.Main()
+}
+
 func main() {
 	//## WEB SERVER ##
 	//Handlers assignment

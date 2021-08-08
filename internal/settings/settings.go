@@ -187,7 +187,7 @@ var ArgConfigDir *string
 var Config ConfigType
 var HtmlTemplate *template.Template
 
-func init() {
+func Main() {
 	//Flags
 	ArgDir = flag.String("dir", ".", "Specifies the custom directory")
 	ArgConfigDir = flag.String("config-dir", "", "Specifies the custom directory with configuration files")
