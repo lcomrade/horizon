@@ -55,7 +55,6 @@ type FilesType struct {
 
 func GetPathToResource(fileName string) string {
 	path := settings.GetFilePath("resources" + fileName)
-	logger.Info.Println(path)
 	if path != "" && fileName != "/" {
 		return path
 	}
@@ -107,7 +106,7 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 
 			var fileInfo = FilesType{
 				Name:    file.Name(),
-				Path:    filepath.Clean(path + "/" + file.Name()),
+				Path:    filepath.Clean(r.URL.Path + "/" + file.Name()),
 				Size:    file.Size(),
 				Mode:    file.Mode(),
 				ModTime: file.ModTime().Format("2006 Jan 2 15:04"),
@@ -126,8 +125,8 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 
 		//In the answer, first the directories, then the files
 		answer := TemplateType{
-			Path:   path,
-			UpPath: filepath.Clean(path + "/../"),
+			Path:   r.URL.Path,
+			UpPath: filepath.Clean(r.URL.Path + "/../"),
 			Files:  append(answerDirs, answerFiles...),
 		}
 
