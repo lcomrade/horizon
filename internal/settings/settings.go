@@ -186,6 +186,7 @@ var ArgDir *string
 var ArgConfigDir *string
 var Config ConfigType
 var HtmlTemplate *template.Template
+var ResourcesDir string
 
 func Main() {
 	//Flags
@@ -203,6 +204,9 @@ func Main() {
 	//Reading a configuration file
 	Config = ReadConfig(GetFilePath("config.json"))
 
-	//WEB
+	//HTML template content
 	HtmlTemplate = GetHtmlPageTemplate(GetFilePath("index.tmpl"))
+
+	//Path to the folder with resources
+	ResourcesDir = GetFilePath("resources")
 }

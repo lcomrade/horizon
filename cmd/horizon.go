@@ -53,12 +53,22 @@ type FilesType struct {
 	Group   string
 }
 
+func GetPathToResource(fileName string) string {
+	path := settings.GetFilePath("resources" + fileName)
+	logger.Info.Println(path)
+	if path != "" && fileName != "/" {
+		return path
+	}
+
+	return *settings.ArgDir + fileName
+}
+
 //## HANDLER ##
 func MainHandler(rw http.ResponseWriter, r *http.Request) {
-	path := r.URL.Path
+	path := GetPathToResource(r.URL.Path)
 
 	//Checking the existence of a path
-	pathStat, err := os.Stat(*settings.ArgDir + path)
+	pathStat, err := os.Stat(path)
 	if err != nil {
 		if os.IsNotExist(err) {
 			logger.Info.Println(err)
@@ -77,7 +87,7 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 		//If the directory
 
 		//Getting a list of files in the directory
-		files, err := ioutil.ReadDir(*settings.ArgDir + path)
+		files, err := ioutil.ReadDir(path)
 		if err != nil {
 			logger.Warning.Println(err)
 			http.Error(rw, err.Error(), 400)
@@ -135,7 +145,7 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 		//If the file
 
 		//Reading a file from the storage
-		file, err := ioutil.ReadFile(*settings.ArgDir + path)
+		file, err := ioutil.ReadFile(path)
 		if err != nil {
 			logger.Warning.Println(err)
 			http.Error(rw, err.Error(), 400)
