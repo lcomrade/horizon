@@ -1,18 +1,17 @@
 package filetool
 
-import(
+import (
 	"fmt"
 	"testing"
 )
 
-func TestIsHide (t *testing.T) {
+func TestIsHide(t *testing.T) {
 	hiddenFile := IsHide(".hide")
 	if hiddenFile != true {
 		fmt.Printf(`--- INFO: IsHide(".hidden") = `)
 		fmt.Println(hiddenFile)
 		t.Error(`IsHide(".hide") != true`)
 	}
-
 
 	nonHiddenFile := IsHide("show")
 	if nonHiddenFile != false {

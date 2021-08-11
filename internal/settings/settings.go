@@ -35,8 +35,8 @@ import (
 // ## CONFIG CONTENT ##
 //Used to read a configuration file
 type ConfigType struct {
-	HttpServer HttpServerType
-//	ShowHiddenFiles bool
+	HttpServer      HttpServerType
+	ShowHiddenFiles bool
 }
 
 type HttpServerType struct {
@@ -54,14 +54,14 @@ var ConfigDefault = ConfigType{
 		CertFile:  "",
 		KeyFile:   "",
 	},
-//	ShowHiddenFiles: true,
+	ShowHiddenFiles: false,
 }
 
 //Get the path to the file. Can return an empty string.
 func GetFilePath(fileName string) string {
 	if *ArgConfigDir != "" {
 		path := filepath.Join(*ArgConfigDir, fileName)
-	
+
 		_, err := os.Stat(path)
 		if err == nil {
 			logger.Info.Println("Load file: " + path)

@@ -24,7 +24,7 @@ package main
 import (
 	"../internal/logger"
 	"../internal/settings"
-	//"../internal/filetool"
+	"../internal/filetool"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -63,6 +63,28 @@ func GetPathToResource(fileName string) string {
 	return filepath.Join(*settings.ArgDir, fileName)
 }
 
+func GetFileInfo(file os.FileInfo, path string) FilesType{
+	//Getting information about one file
+	var uid = fmt.Sprint(file.Sys().(*syscall.Stat_t).Uid)
+	var owner, _ = user.LookupId(uid)
+	var gid = fmt.Sprint(file.Sys().(*syscall.Stat_t).Gid)
+	var group, _ = user.LookupId(gid)
+
+	var fileInfo = FilesType{
+		Name:    file.Name(),
+		Path:    filepath.Join(path, file.Name()),
+		Size:    file.Size(),
+		Mode:    file.Mode(),
+		ModTime: file.ModTime().Format("2006 Jan 2 15:04"),
+		Uid:     uid,
+		Owner:   owner.Username,
+		Gid:     gid,
+		Group:   group.Username,
+	}
+
+	return fileInfo
+}
+
 //## HANDLER ##
 func MainHandler(rw http.ResponseWriter, r *http.Request) {
 	path := GetPathToResource(r.URL.Path)
@@ -99,28 +121,18 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 		var answerFiles []FilesType
 
 		for _, file := range files {
-			//Getting information about one file
-			var uid = fmt.Sprint(file.Sys().(*syscall.Stat_t).Uid)
-			var owner, _ = user.LookupId(uid)
-			var gid = fmt.Sprint(file.Sys().(*syscall.Stat_t).Gid)
-			var group, _ = user.LookupId(gid)
+			if settings.Config.ShowHiddenFiles == false && filetool.IsHide(file.Name()) == true{
+				
+			}else{
 
-			var fileInfo = FilesType{
-				Name:    file.Name(),
-				Path:    filepath.Join(r.URL.Path, file.Name()),
-				Size:    file.Size(),
-				Mode:    file.Mode(),
-				ModTime: file.ModTime().Format("2006 Jan 2 15:04"),
-				Uid:     uid,
-				Owner:   owner.Username,
-				Gid:     gid,
-				Group:   group.Username,
-			}
-			//Saving file information to an array
-			if file.IsDir() == true {
-				answerDirs = append(answerDirs, fileInfo)
-			} else {
-				answerFiles = append(answerFiles, fileInfo)
+				fileInfo := GetFileInfo(file, r.URL.Path)
+
+				//Saving file information to an array
+				if file.IsDir() == true {
+					answerDirs = append(answerDirs, fileInfo)
+				} else {
+					answerFiles = append(answerFiles, fileInfo)
+				}
 			}
 		}
 

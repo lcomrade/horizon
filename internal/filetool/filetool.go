@@ -21,7 +21,7 @@
 */
 package filetool
 
-func IsHide (fileName string) bool {
+func IsHide(fileName string) bool {
 	if fileName[0:1] == "." {
 		return true
 	} else {
