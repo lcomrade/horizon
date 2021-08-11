@@ -24,6 +24,7 @@ package main
 import (
 	"../internal/logger"
 	"../internal/settings"
+	//"../internal/filetool"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -59,7 +60,7 @@ func GetPathToResource(fileName string) string {
 		return path
 	}
 
-	return *settings.ArgDir + fileName
+	return filepath.Join(*settings.ArgDir, fileName)
 }
 
 //## HANDLER ##
@@ -106,7 +107,7 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 
 			var fileInfo = FilesType{
 				Name:    file.Name(),
-				Path:    filepath.Clean(r.URL.Path + "/" + file.Name()),
+				Path:    filepath.Join(r.URL.Path, file.Name()),
 				Size:    file.Size(),
 				Mode:    file.Mode(),
 				ModTime: file.ModTime().Format("2006 Jan 2 15:04"),
@@ -126,7 +127,7 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 		//In the answer, first the directories, then the files
 		answer := TemplateType{
 			Path:   r.URL.Path,
-			UpPath: filepath.Clean(r.URL.Path + "/../"),
+			UpPath: filepath.Join(r.URL.Path, ".."),
 			Files:  append(answerDirs, answerFiles...),
 		}
 

@@ -36,6 +36,7 @@ import (
 //Used to read a configuration file
 type ConfigType struct {
 	HttpServer HttpServerType
+//	ShowHiddenFiles bool
 }
 
 type HttpServerType struct {
@@ -53,15 +54,18 @@ var ConfigDefault = ConfigType{
 		CertFile:  "",
 		KeyFile:   "",
 	},
+//	ShowHiddenFiles: true,
 }
 
 //Get the path to the file. Can return an empty string.
 func GetFilePath(fileName string) string {
 	if *ArgConfigDir != "" {
-		_, err := os.Stat(*ArgConfigDir + fileName)
+		path := filepath.Join(*ArgConfigDir, fileName)
+	
+		_, err := os.Stat(path)
 		if err == nil {
-			logger.Info.Println("Load file: " + *ArgConfigDir + fileName)
-			return *ArgConfigDir + fileName
+			logger.Info.Println("Load file: " + path)
+			return path
 		}
 		logger.Info.Println(err)
 	}
@@ -76,7 +80,7 @@ func GetFilePath(fileName string) string {
 		}
 
 		//Full path to file
-		userFullPath := filepath.Clean(variableHOME + "/" + build.UserConfigDir + "/" + fileName)
+		userFullPath := filepath.Join(variableHOME, build.UserConfigDir, fileName)
 
 		//Checking the existence of a file
 		_, err := os.Stat(userFullPath)
@@ -87,7 +91,7 @@ func GetFilePath(fileName string) string {
 	}
 
 	//Checking the SYSTEM path of the config file
-	sysFullPath := filepath.Clean(build.SysConfigDir + "/" + fileName)
+	sysFullPath := filepath.Join(build.SysConfigDir, fileName)
 	_, err := os.Stat(sysFullPath)
 	if err == nil {
 		return sysFullPath
