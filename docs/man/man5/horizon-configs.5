@@ -2,14 +2,17 @@
 .SH  NAME
 Horizon \- configuration file guide
 .PP
-.SH  FILES
+.SH  FILES AND DIRS
 Horizon uses the configuration files located in the \fB$HOME/.config/horizon/\fR and \fB/etc/horizon/\fR directories. List of configuration files:
 .PP
-\fBconfig.json\fR
+\fBconfig.json (file)\fR
     Contains the basic settings. For example: the port on which the server will run.
 .PP
-\fBindex.tmpl\fR
+\fBindex.tmpl (file)\fR
     Contains the template of the html page that will be displayed in the browser.
+.PP
+\fBresources (dir)\fR
+    Contains custom resources that will be available but will not appear in the file list. For example it can be used for CSS styles or favicon.ico.
 .PP
 .SH  config.json
 Here is an example of a configuration file with all default values.
