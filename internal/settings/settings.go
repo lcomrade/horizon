@@ -37,6 +37,7 @@ import (
 type ConfigType struct {
 	HttpServer      HttpServerType
 	ShowHiddenFiles bool
+	ModTimeFormat   string
 }
 
 type HttpServerType struct {
@@ -55,6 +56,7 @@ var ConfigDefault = ConfigType{
 		KeyFile:   "",
 	},
 	ShowHiddenFiles: false,
+	ModTimeFormat:   "2006 Jan 2 15:04",
 }
 
 //Get the path to the file. Can return an empty string.

@@ -25,9 +25,12 @@ Here is an example of a configuration file with all default values.
     "CertFile":  "",
     "KeyFile":   ""
   },
-  "ShowHiddenFiles": false
+  "ShowHiddenFiles": false,
+  "ModTimeFormat": "2006 Jan 2 15:04"
 }
 .fi
+.PP
+\fB*\fR The date and time format is set as in the Go programming language. Read more: \fBhttps://golang.org/src/time/format.go\fR
 .PP
 .SH  index.tmpl
 If you want to write your own HTML page template, use the GO documentation: \fBhttps://pkg.go.dev/html/template\fR . The example below shows the default template.

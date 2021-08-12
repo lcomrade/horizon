@@ -22,9 +22,9 @@
 package main
 
 import (
+	"../internal/filetool"
 	"../internal/logger"
 	"../internal/settings"
-	"../internal/filetool"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -63,7 +63,7 @@ func GetPathToResource(fileName string) string {
 	return filepath.Join(*settings.ArgDir, fileName)
 }
 
-func GetFileInfo(file os.FileInfo, path string) FilesType{
+func GetFileInfo(file os.FileInfo, path string) FilesType {
 	//Getting information about one file
 	var uid = fmt.Sprint(file.Sys().(*syscall.Stat_t).Uid)
 	var owner, _ = user.LookupId(uid)
@@ -75,7 +75,7 @@ func GetFileInfo(file os.FileInfo, path string) FilesType{
 		Path:    filepath.Join(path, file.Name()),
 		Size:    file.Size(),
 		Mode:    file.Mode(),
-		ModTime: file.ModTime().Format("2006 Jan 2 15:04"),
+		ModTime: file.ModTime().Format(settings.Config.ModTimeFormat),
 		Uid:     uid,
 		Owner:   owner.Username,
 		Gid:     gid,
@@ -121,9 +121,9 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 		var answerFiles []FilesType
 
 		for _, file := range files {
-			if settings.Config.ShowHiddenFiles == false && filetool.IsHide(file.Name()) == true{
-				
-			}else{
+			if settings.Config.ShowHiddenFiles == false && filetool.IsHide(file.Name()) == true {
+
+			} else {
 
 				fileInfo := GetFileInfo(file, r.URL.Path)
 
