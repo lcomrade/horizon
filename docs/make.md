@@ -54,6 +54,8 @@ Tests the project with automated tests.
 ## make release
 Builds a project for all supported arch and OS, creates packages and creates an archive with man pages.
 
+**Environment variables**: `LDFLAGS`, `VERSION`, `MAINTAINER`
+
 ## make install
 Installs program.
 
