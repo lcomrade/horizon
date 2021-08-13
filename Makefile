@@ -85,7 +85,7 @@ install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin/
 	cp dist/$(NAME).$(GOOS).$(GOARCH) $(DESTDIR)$(PREFIX)/bin/$(NAME)
 
-	cp build/unix-like/share/bash-completion/completions/horizon $(DESTDIR)$(PREFIX)/share/bash-completion/completions/horizon
+	cp -r build/unix-like/* $(DESTDIR)$(PREFIX)/
 
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1/
 	cp dist/man/man1/horizon.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/horizon.1.gz
@@ -108,8 +108,8 @@ deb:
 	echo 'Provides: $(NAME)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Version: $(VERSION)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Architecture: $(DEBARCH)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
-	@if [ $(DEBARCH) == "amd64" ]; then \
-		echo 'Depends: libc6' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control; fi
+	bash -c 'if [ "$(DEBARCH)" == "amd64" ]; then echo "Depends: libc6" >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control; fi'
+	echo 'Recommends: man-db, bash-completion' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Priority: optional' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Section: net' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Maintainer: $(MAINTAINER)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
@@ -132,9 +132,9 @@ deb:
 
 	DESTDIR=$(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH) PREFIX=/usr make install
 
-	fakeroot dpkg-deb --build $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)
+	bash -c "cd $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/ && md5deep -r -l usr/ > DEBIAN/md5sums"
 
-	bash -c "cd $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/ && md5deep -r usr > DEBIAN/md5sums"
+	fakeroot dpkg-deb --build $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)
 
 	mv $(DEB_BUILD_DIR)/*.deb dist/$(NAME)_$(VERSION)_$(DEBARCH).deb
 	
