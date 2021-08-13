@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+_horizon_completions(){
+	if [[ ${COMP_WORDS[COMP_CWORD-1]} == "-dir" || ${COMP_WORDS[COMP_CWORD-1]} == "-config-dir" ]]; then
+		COMPREPLY=($(compgen -S '/' -d -- "${COMP_WORDS[COMP_CWORD]}"))
+		return
+	fi
+
+	for i in ${COMP_WORDS[@]}; do
+	
+		if [ $i == "-version" ]; then
+			return
+	  	fi
+	done
+
+
+	COMPREPLY=($(compgen -W "-config-dir -dir -version" -- "${COMP_WORDS[COMP_CWORD]}"))
+}
+
+complete -o nospace -F _horizon_completions horizon

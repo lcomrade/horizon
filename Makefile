@@ -85,6 +85,8 @@ install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin/
 	cp dist/$(NAME).$(GOOS).$(GOARCH) $(DESTDIR)$(PREFIX)/bin/$(NAME)
 
+	cp build/unix-like/share/bash-completion/completions/horizon $(DESTDIR)$(PREFIX)/share/bash-completion/completions/horizon
+
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1/
 	cp dist/man/man1/horizon.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/horizon.1.gz
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man5/
@@ -92,6 +94,8 @@ install:
 
 uninstall:
 	rm $(DESTDIR)$(PREFIX)/bin/$(NAME)
+
+	rm $(DESTDIR)$(PREFIX)/share/bash-completion/completions/horizon
 	
 	rm $(DESTDIR)$(PREFIX)/share/man/man1/horizon.1.gz
 	rm $(DESTDIR)$(PREFIX)/share/man/man5/horizon-configs.5.gz
