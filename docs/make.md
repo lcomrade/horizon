@@ -40,7 +40,7 @@ After the build, the program and documentation will appear in the `./dist` direc
 ## make configure
 Configures the project and prepares it for build.
 
-**Environment variables**: `VERSION`, `SysConfigDir`, `UserHomeEnvVar`, `UserConfigDir`
+**Environment variables**: `VERSION`, `SysConfigDir`, `UserHomeEnvVar`, `UserConfigDir`, `LangEnvVar`
 
 ## make
 Build project and man pages.
