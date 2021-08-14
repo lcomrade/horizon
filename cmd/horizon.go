@@ -23,6 +23,7 @@ package main
 
 import (
 	"../internal/filetool"
+	"../internal/locale"
 	"../internal/logger"
 	"../internal/settings"
 	"fmt"
@@ -178,8 +179,8 @@ func main() {
 	http.HandleFunc("/", MainHandler)
 
 	//Print information about the WEB server
-	logger.Info.Println("Server listen:", settings.Config.HttpServer.Listen)
-	logger.Info.Println("Server use TLS:", settings.Config.HttpServer.EnableTLS)
+	logger.Info.Println(locale.Server_listen+":", settings.Config.HttpServer.Listen)
+	logger.Info.Println(locale.Server_use_TLS+":", settings.Config.HttpServer.EnableTLS)
 
 	//Enable TLS?
 	//No TLS
@@ -196,7 +197,7 @@ func main() {
 		_, err := os.Stat(settings.Config.HttpServer.CertFile)
 		if err != nil {
 			if os.IsNotExist(err) {
-				logger.Error.Fatal("CERT file does not exist: " + settings.Config.HttpServer.CertFile)
+				logger.Error.Fatal(locale.CERT_file_does_not_exist + ": " + settings.Config.HttpServer.CertFile)
 			}
 		}
 
@@ -204,7 +205,7 @@ func main() {
 		_, err = os.Stat(settings.Config.HttpServer.KeyFile)
 		if err != nil {
 			if os.IsNotExist(err) {
-				logger.Error.Fatal("KEY file does not exist: " + settings.Config.HttpServer.KeyFile)
+				logger.Error.Fatal(locale.KEY_file_does_not_exist + ": " + settings.Config.HttpServer.KeyFile)
 			}
 		}
 

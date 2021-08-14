@@ -10,6 +10,8 @@ It is not necessary to specify those environment variables for which a default v
 
 `UserConfigDir` - sets the path to the configuration files relative to the user's home directory (default: `.config/horizon/`)
 
+`LangEnvVar` - sets the environment variable containing the locale (default: `LANG`)
+
 ## Go compiler parameters
 To get a complete list of architectures and OS run `go tool dist list`.
 

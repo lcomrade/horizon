@@ -3,6 +3,7 @@ VERSION ?= nil
 SysConfigDir ?= /etc/horizon/
 UserHomeEnvVar ?= HOME
 UserConfigDir ?= .config/horizon/
+LangEnvVar ?= LANG
 
 GOOS ?= $(shell go env GOOS)
 GOARCH ?= $(shell go env GOARCH)
@@ -40,6 +41,7 @@ configure:
 	echo 'var SysConfigDir = "$(SysConfigDir)"' >> internal/build/build.go
 	echo 'var UserHomeEnvVar = "$(UserHomeEnvVar)"' >> internal/build/build.go
 	echo 'var UserConfigDir = "$(UserConfigDir)"' >> internal/build/build.go
+	echo 'var LangEnvVar = "$(LangEnvVar)"' >> internal/build/build.go
 
 test:
 	@if [ ! -f "internal/build/build.go" ]; then make configure; fi

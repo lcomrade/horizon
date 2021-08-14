@@ -23,6 +23,7 @@ package settings
 
 import (
 	"../build"
+	"../locale"
 	"../logger"
 	"encoding/json"
 	"flag"
@@ -66,7 +67,7 @@ func GetFilePath(fileName string) string {
 
 		_, err := os.Stat(path)
 		if err == nil {
-			logger.Info.Println("Load file: " + path)
+			logger.Info.Println(locale.Load_file + ": " + path)
 			return path
 		}
 		logger.Info.Println(err)
@@ -77,7 +78,7 @@ func GetFilePath(fileName string) string {
 		//Getting HOME environment variable
 		variableHOME := os.Getenv(build.UserHomeEnvVar)
 		if variableHOME == "" {
-			logger.Warning.Println(build.UserHomeEnvVar + " environment variable is empty")
+			logger.Warning.Println(build.UserHomeEnvVar + " " + locale.Env_var_is_empty)
 			break
 		}
 
@@ -158,14 +159,14 @@ func GetHtmlPageTemplate(indexHtmlFilePath string) *template.Template {
 		</head>
 		<body>
 			<h2>{{.Path}}</h2>
-			<p><a href={{.UpPath}}>Go top</a></p>
+			<p><a href={{.UpPath}}>` + locale.Go_top_tmpl + `</a></p>
 			<table align='left' border=1 cellpadding=5>
-				<th align='left'>Name</th>
-				<th align='left'>Size (bit)</th>
-				<th align='left'>Mode</th>
-				<th align='left'>Modification time</th>
-				<th align='left'>Owner</th>
-				<th align='left'>Group</th>
+				<th align='left'>` + locale.Name_tmpl + `</th>
+				<th align='left'>` + locale.Size_tmpl + ` (bit)</th>
+				<th align='left'>` + locale.Mode_tmpl + `</th>
+				<th align='left'>` + locale.ModTime_tmpl + `</th>
+				<th align='left'>` + locale.Owner_tmpl + `</th>
+				<th align='left'>` + locale.Group_tmpl + `</th>
 
 				{{range .Files}}
 				<tr>
@@ -196,9 +197,9 @@ var ResourcesDir string
 
 func Main() {
 	//Flags
-	ArgDir = flag.String("dir", ".", "Specifies the custom directory")
-	ArgConfigDir = flag.String("config-dir", "", "Specifies the custom directory with configuration files")
-	argVersion := flag.Bool("version", false, "Display version and exit")
+	ArgDir = flag.String("dir", ".", locale.Dir_flag)
+	ArgConfigDir = flag.String("config-dir", "", locale.Config_dir_flag)
+	argVersion := flag.Bool("version", false, locale.Version_flag)
 	flag.Parse()
 
 	//Displaying the version
