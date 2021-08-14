@@ -22,7 +22,6 @@
 package main
 
 import (
-	"../internal/filetool"
 	"../internal/locale"
 	"../internal/logger"
 	"../internal/settings"
@@ -62,6 +61,14 @@ func GetPathToResource(fileName string) string {
 	}
 
 	return filepath.Join(*settings.ArgDir, fileName)
+}
+
+func IsHide(fileName string) bool {
+	if fileName[0:1] == "." {
+		return true
+	} else {
+		return false
+	}
 }
 
 func GetFileInfo(file os.FileInfo, path string) FilesType {
@@ -122,7 +129,7 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 		var answerFiles []FilesType
 
 		for _, file := range files {
-			if settings.Config.ShowHiddenFiles == false && filetool.IsHide(file.Name()) == true {
+			if settings.Config.ShowHiddenFiles == false && IsHide(file.Name()) == true {
 
 			} else {
 
