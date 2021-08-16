@@ -106,6 +106,8 @@ deb:
 	mkdir -p $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/
 	cp -r build/deb/* $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/
 	
+	chmod 755 $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/postinst
+	
 	echo 'Package: $(NAME)' > $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Provides: $(NAME)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Version: $(VERSION)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
