@@ -70,7 +70,7 @@ func GetFilePath(fileName string) string {
 			logger.Info.Println(locale.Load_file + ": " + path)
 			return path
 		}
-		logger.Info.Println(err)
+		//logger.Info.Println(err)
 		return ""
 	}
 
