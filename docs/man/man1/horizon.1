@@ -27,6 +27,15 @@ LANG
 .SH  FILES
 The location of the configuration files is described in detail in the \fBFILES\fR section of the \fBhorizon-configs\fR(5) manual.
 .PP
+.SH  LOGGING
+Below is an example of how to save the logs to a file. The info.log file stores information, and the error.log file stores errors.
+.nf
+\fBhorizon >>/var/log/horizon/info.log 2>>/var/log/horizon/error.log\fR
+.fi
+.PP
+.SH  SYMBOLIC LINKS
+Horizon supports symbolic links.
+.PP
 .SH  BUGS
 It was too time consuming to post information about every bug found here, but if you want to know about existing bugs or report a bug you can use this URL: \fBhttps://github.com/lcomrade/horizon/issues\fR
 .PP
