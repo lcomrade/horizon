@@ -1,0 +1,13 @@
+[Unit]
+Description=Horizon - minimalist WEB-server for data transfer via HTTP
+Documentation=man:horizon(1) man:horizon-configs(5)
+Wants=network-online.target
+After=network.target network-online.target
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/bash -c "/usr/bin/mkdir -p /var/log/horizon/ && /usr/bin/mkdir -p /etc/horizon/share/"
+ExecStart=/usr/bin/bash -c "/usr/bin/horizon -config-dir /etc/horizon/ -dir /etc/horizon/share/ >>/var/log/horizon/info.log 2>>/var/log/horizon/error.log"
+
+[Install]
+WantedBy=multi-user.target

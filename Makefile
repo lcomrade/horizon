@@ -135,6 +135,7 @@ deb:
 	DESTDIR=$(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH) PREFIX=/usr make install
 
 	bash -c "cd $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/ && md5deep -r -l usr/ > DEBIAN/md5sums"
+	bash -c "cd $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/ && md5deep -r -l lib/ >> DEBIAN/md5sums"
 	bash -c "cd $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/ && md5deep -r -l etc/ >> DEBIAN/md5sums"
 
 	fakeroot dpkg-deb --build $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)
