@@ -1,0 +1,13 @@
+/var/log/horizon/info.log {
+  rotate 3
+  daily
+  compress
+  missingok
+}
+
+/var/log/horizon/error.log {
+  rotate 3
+  weekly
+  compress
+  missingok
+}
