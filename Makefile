@@ -111,7 +111,7 @@ deb:
 	echo 'Version: $(VERSION)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Architecture: $(DEBARCH)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	bash -c 'if [ "$(DEBARCH)" == "amd64" ]; then echo "Depends: libc6" >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control; fi'
-	echo 'Recommends: man-db, bash-completion' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
+	echo 'Recommends: logrotate, man-db, bash-completion' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Priority: optional' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Section: net' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Maintainer: $(MAINTAINER)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
@@ -135,6 +135,7 @@ deb:
 	DESTDIR=$(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH) PREFIX=/usr make install
 
 	bash -c "cd $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/ && md5deep -r -l usr/ > DEBIAN/md5sums"
+	bash -c "cd $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/ && md5deep -r -l etc/ >> DEBIAN/md5sums"
 
 	fakeroot dpkg-deb --build $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)
 
