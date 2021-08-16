@@ -71,6 +71,7 @@ func GetFilePath(fileName string) string {
 			return path
 		}
 		logger.Info.Println(err)
+		return ""
 	}
 
 	//Checking the USER path for the location of the config file
