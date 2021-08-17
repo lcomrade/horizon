@@ -107,6 +107,8 @@ deb:
 	cp -r build/deb/* $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/
 	
 	chmod 755 $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/postinst
+	chmod 755 $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/postrm
+	chmod 755 $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/etc/init.d/horizon
 	
 	echo 'Package: $(NAME)' > $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Provides: $(NAME)' >> $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control

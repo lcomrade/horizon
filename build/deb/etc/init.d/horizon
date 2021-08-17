@@ -1,0 +1,45 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          horizon
+# Required-Start:    $local_fs $remote_fs $time $network
+# Required-Stop:     $local_fs $remote_fs $time $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Horizon daemon (horizon)
+# Description: Horizon - minimalist WEB-server for data transfer via HTTP
+### END INIT INFO
+
+. /lib/lsb/init-functions
+
+PATH="/usr/sbin:/usr/local/bin:/usr/bin"
+
+case "$1" in
+	start)
+		log_action_msg "Starting horizon"
+		mkdir -p /var/log/horizon/
+		mkdir -p /etc/horizon/share/
+		horizon -config-dir /etc/horizon/ -dir /etc/horizon/share/ >>/var/log/horizon/info.log 2>>/var/log/horizon/error.log
+		exit $?
+		;;
+	stop)
+		log_action_msg "Stopping horizon"
+		pkill -9 horizon
+        exit $?
+        ;;
+	restart|reload|force-reload)
+		log_action_msg "Restarting horizon"
+        $0 stop
+        $0 start
+        exit $?
+        ;;
+	status)
+        ps aux | grep horizon | grep -v grep
+        exit $?
+        ;;
+	*)
+		echo "Usage: $0 {start|stop|status|restart|reload|force-reload}"
+        exit 2
+        ;;
+esac
+exit 0
