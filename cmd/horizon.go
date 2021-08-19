@@ -76,7 +76,7 @@ func GetFileInfo(file os.FileInfo, path string) FilesType {
 
 	var fileInfo = FilesType{
 		Name:    file.Name(),
-		Path:    filepath.Join(path, file.Name()),
+		Path:    filepath.ToSlash(filepath.Join(path, file.Name())),
 		Size:    file.Size(),
 		Mode:    file.Mode(),
 		ModTime: file.ModTime().Format(settings.Config.ModTimeFormat),
@@ -143,7 +143,7 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 		//In the answer, first the directories, then the files
 		answer := TemplateType{
 			Path:   r.URL.Path,
-			UpPath: filepath.Join(r.URL.Path, ".."),
+			UpPath: filepath.ToSlash(filepath.Join(r.URL.Path, "..")),
 			Files:  append(answerDirs, answerFiles...),
 		}
 
