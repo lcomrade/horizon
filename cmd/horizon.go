@@ -22,16 +22,14 @@
 package main
 
 import (
+	"../internal/fileinfo"
 	"../internal/locale"
 	"../internal/logger"
 	"../internal/settings"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
-	"os/user"
 	"path/filepath"
-	"syscall"
 )
 
 // ## WEB TEMPLATE ##
@@ -73,10 +71,8 @@ func IsHide(fileName string) bool {
 
 func GetFileInfo(file os.FileInfo, path string) FilesType {
 	//Getting information about one file
-	var uid = fmt.Sprint(file.Sys().(*syscall.Stat_t).Uid)
-	var owner, _ = user.LookupId(uid)
-	var gid = fmt.Sprint(file.Sys().(*syscall.Stat_t).Gid)
-	var group, _ = user.LookupId(gid)
+
+	uid, owner, gid, group := fileinfo.GetOwnerAndGroup(file)
 
 	var fileInfo = FilesType{
 		Name:    file.Name(),
@@ -85,9 +81,9 @@ func GetFileInfo(file os.FileInfo, path string) FilesType {
 		Mode:    file.Mode(),
 		ModTime: file.ModTime().Format(settings.Config.ModTimeFormat),
 		Uid:     uid,
-		Owner:   owner.Username,
+		Owner:   owner,
 		Gid:     gid,
-		Group:   group.Username,
+		Group:   group,
 	}
 
 	return fileInfo
