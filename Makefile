@@ -48,6 +48,7 @@ test:
 	go test -v ./...
 
 release:
+	#UNIX-like
 	@if [ ! -f "internal/build/build.go" ]; then make configure; fi
 	mkdir -p dist/
 	
@@ -72,16 +73,33 @@ release:
 	GOOS=freebsd GOARCH=386   go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).freebsd.386 $(MAIN_GO)
 	GOOS=freebsd GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).freebsd.amd64 $(MAIN_GO)
 	GOOS=freebsd GOARCH=arm   go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).freebsd.arm $(MAIN_GO)
+	GOOS=freebsd GOARCH=arm64 go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).freebsd.arm64 $(MAIN_GO)
 
 	GOOS=openbsd GOARCH=386   go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).openbsd.386 $(MAIN_GO)
 	GOOS=openbsd GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).openbsd.amd64 $(MAIN_GO)
 	GOOS=openbsd GOARCH=arm   go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).openbsd.arm $(MAIN_GO)
+	GOOS=openbsd GOARCH=arm64 go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).openbsd.arm64 $(MAIN_GO)
 
 	GOOS=netbsd GOARCH=386    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).netbsd.386 $(MAIN_GO)
 	GOOS=netbsd GOARCH=amd64  go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).netbsd.amd64 $(MAIN_GO)
 	GOOS=netbsd GOARCH=arm    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).netbsd.arm $(MAIN_GO)
+	GOOS=netbsd GOARCH=arm64  go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).netbsd.arm64 $(MAIN_GO)
 
 	rm -rf dist/man/
+
+	#Windows
+	echo 'package build' > internal/build/build.go
+	echo '' >> internal/build/build.go
+	echo 'var Name = "$(NAME)"' >> internal/build/build.go
+	echo 'var Version = "$(VERSION)"' >> internal/build/build.go
+	echo 'var SysConfigDir = `C:\ProgramData\horizon\`' >> internal/build/build.go
+	echo 'var UserHomeEnvVar = "APPDATA"' >> internal/build/build.go
+	echo 'var UserConfigDir = `horizon\`' >> internal/build/build.go
+	echo 'var LangEnvVar = "LANG"' >> internal/build/build.go
+
+	GOOS=windows GOARCH=386    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.386.exe $(MAIN_GO)
+	GOOS=windows GOARCH=amd64  go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.amd64.exe $(MAIN_GO)
+	GOOS=windows GOARCH=arm    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.arm.exe $(MAIN_GO)
 
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin/
