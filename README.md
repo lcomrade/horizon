@@ -27,6 +27,10 @@ The program comes as a single binary file and can easily be ported to a UNIX-lik
 
 `NOTE:` If you need man pages you can find it [here](https://github.com/lcomrade/horizon/releases/latest/download/man.tar)
 
+### Windows
+1. Download a binary file for your architecture from the [release](https://github.com/lcomrade/horizon/releases/latest) page
+2. Place program in `C:\Windows\` or in another directory provided for installing binary files
+
 ### Compiling from source code
 1. Install `Go`, `GNU Make` and `gzip`
 2. Download the source code from the [release](https://github.com/lcomrade/horizon/releases/latest) page
@@ -37,7 +41,12 @@ The program comes as a single binary file and can easily be ported to a UNIX-lik
 `NOTE:` If you want to uninstall Horizon run as root: `make uninstall`
 
 ## Documentation
-All documentation is supplied as man pages. If you installed Horizon from a DEB package or using `make install` the documentation is already installed.
+### Build
+- [Building on UNIX-like systems](https://github.com/lcomrade/horizon/blob/main/docs/make.md)
+- [Build on Windows](https://github.com/lcomrade/horizon/blob/main/docs/make_bat.md)
+
+### Configuration
+Configuration documentation is supplied as man pages. If you installed Horizon from a DEB package or using `make install` the documentation is already installed.
 Otherwise, you can download the latest documentation from [here](https://github.com/lcomrade/horizon/releases/latest/download/man.tar).
 
 ## Bugs and Suggestion
