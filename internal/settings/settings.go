@@ -38,6 +38,7 @@ import (
 type ConfigType struct {
 	HttpServer      HttpServerType
 	ShowHiddenFiles bool
+	HumanFileSize   bool
 	ModTimeFormat   string
 }
 
@@ -57,6 +58,7 @@ var ConfigDefault = ConfigType{
 		KeyFile:   "",
 	},
 	ShowHiddenFiles: false,
+	HumanFileSize:   true,
 	ModTimeFormat:   "2006 Jan 2 15:04",
 }
 
@@ -163,7 +165,7 @@ func GetHtmlPageTemplate(indexHtmlFilePath string) *template.Template {
 			<p><a href={{.UpPath}}>` + locale.Go_top_tmpl + `</a></p>
 			<table align='left' border=1 cellpadding=5>
 				<th align='left'>` + locale.Name_tmpl + `</th>
-				<th align='left'>` + locale.Size_tmpl + ` (bit)</th>
+				<th align='left'>` + locale.Size_tmpl + `</th>
 				<th align='left'>` + locale.Mode_tmpl + `</th>
 				<th align='left'>` + locale.ModTime_tmpl + `</th>
 				<th align='left'>` + locale.Owner_tmpl + `</th>

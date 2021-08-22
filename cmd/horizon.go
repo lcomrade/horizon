@@ -26,6 +26,7 @@ import (
 	"../internal/locale"
 	"../internal/logger"
 	"../internal/settings"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -43,7 +44,7 @@ type TemplateType struct {
 type FilesType struct {
 	Name    string
 	Path    string
-	Size    int64
+	Size    string
 	Mode    os.FileMode
 	ModTime string
 	Uid     string
@@ -69,6 +70,38 @@ func IsHide(fileName string) bool {
 	}
 }
 
+func ConvertFileSize(size int64) string {
+	if settings.Config.HumanFileSize == false {
+		return fmt.Sprint(size)
+	}
+
+	//TB
+	if size >= 1099511627776 {
+		sizeTmp := size / 1099511627776
+		return fmt.Sprint(sizeTmp) + " " + locale.TB
+	}
+
+	//GB
+	if size >= 1073741824 {
+		sizeTmp := size / 1073741824
+		return fmt.Sprint(sizeTmp) + " " + locale.GB
+	}
+
+	//MB
+	if size >= 1048576 {
+		sizeTmp := size / 1048576
+		return fmt.Sprint(sizeTmp) + " " + locale.MB
+	}
+
+	//KB
+	if size >= 1024 {
+		sizeTmp := size / 1024
+		return fmt.Sprint(sizeTmp) + " " + locale.KB
+	}
+
+	return fmt.Sprint(size)
+}
+
 func GetFileInfo(file os.FileInfo, path string) FilesType {
 	//Getting information about one file
 
@@ -77,7 +110,7 @@ func GetFileInfo(file os.FileInfo, path string) FilesType {
 	var fileInfo = FilesType{
 		Name:    file.Name(),
 		Path:    filepath.ToSlash(filepath.Join(path, file.Name())),
-		Size:    file.Size(),
+		Size:    ConvertFileSize(file.Size()),
 		Mode:    file.Mode(),
 		ModTime: file.ModTime().Format(settings.Config.ModTimeFormat),
 		Uid:     uid,

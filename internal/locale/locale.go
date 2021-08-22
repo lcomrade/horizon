@@ -21,7 +21,7 @@
 */
 package locale
 
-import(
+import (
 	"../build"
 	"os"
 )
@@ -49,8 +49,13 @@ var ModTime_tmpl = "Modification time"
 var Owner_tmpl = "Owner"
 var Group_tmpl = "Group"
 
-func getTranslate(){
-	if Lang == "ru"{
+var TB = "TB"
+var GB = "GB"
+var MB = "MB"
+var KB = "KB"
+
+func getTranslate() {
+	if Lang == "ru" {
 		// cmd/horizon.go
 		Server_listen = "Сервер слушает"
 		Server_use_TLS = "Сервер использует TLS"
@@ -71,7 +76,12 @@ func getTranslate(){
 		ModTime_tmpl = "Время модификации"
 		Owner_tmpl = "Владелец"
 		Group_tmpl = "Группа"
-		
+
+		TB = "Тб"
+		GB = "Гб"
+		MB = "Мб"
+		KB = "Кб"
+
 		return
 	}
 }
@@ -81,7 +91,7 @@ func init() {
 
 	for _, char := range locale[:] {
 		charTmp := string(char)
-		
+
 		if charTmp == "." {
 			break
 		}
@@ -90,7 +100,7 @@ func init() {
 			break
 		}
 
-		Lang = Lang+charTmp
+		Lang = Lang + charTmp
 	}
 
 	getTranslate()
