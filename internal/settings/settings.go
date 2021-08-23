@@ -168,12 +168,24 @@ func Main() {
 	//Flags
 	ArgDir = flag.String("dir", ".", locale.Dir_flag)
 	ArgConfigDir = flag.String("config-dir", "", locale.Config_dir_flag)
+	argInfo := flag.Bool("info", false, locale.Info_flag)
 	argVersion := flag.Bool("version", false, locale.Version_flag)
 	flag.Parse()
 
+	//Displaying the build information
+	if *argInfo == true {
+		fmt.Println("Name:", build.Name)
+		fmt.Println("Version:", build.Version)
+		fmt.Println("SysConfigDir:", build.SysConfigDir)
+		fmt.Println("UserHomeEnvVar:", build.UserHomeEnvVar)
+		fmt.Println("UserConfigDir:", build.UserConfigDir)
+		fmt.Println("LangEnvVar:", build.LangEnvVar)
+		os.Exit(0)
+	}
+
 	//Displaying the version
 	if *argVersion == true {
-		fmt.Println("Horizon", build.Version)
+		fmt.Println(build.Name, build.Version)
 		os.Exit(0)
 	}
 

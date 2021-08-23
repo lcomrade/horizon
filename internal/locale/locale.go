@@ -39,6 +39,7 @@ var Load_file = "Load file"
 var Env_var_is_empty = "environment variable is empty"
 var Dir_flag = "Specifies the custom directory"
 var Config_dir_flag = "Specifies the custom directory with configuration files"
+var Info_flag = "Display build info and exit"
 var Version_flag = "Display version and exit"
 
 var Go_top_tmpl = "Go top"
@@ -67,6 +68,7 @@ func getTranslate() {
 		Env_var_is_empty = "переменная окружения пуста"
 		Dir_flag = "Указывает директорию"
 		Config_dir_flag = "Указывает директорию с конфигурационными файлами"
+		Info_flag = "Напечатать информацию о сборке и выйти"
 		Version_flag = "Напечатать версию и выйти"
 
 		Go_top_tmpl = "Вверх"
