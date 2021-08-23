@@ -193,15 +193,7 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 
 		//If the file
 
-		//Reading a file from the storage
-		file, err := ioutil.ReadFile(path)
-		if err != nil {
-			logger.Warning.Println(err)
-			http.Error(rw, err.Error(), 400)
-			return
-		}
-		//Sending file
-		rw.Write(file)
+		http.ServeFile(rw, r, path)
 	}
 }
 
