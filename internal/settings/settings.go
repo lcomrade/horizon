@@ -152,40 +152,6 @@ func GetHtmlPageTemplate(indexHtmlFilePath string) *template.Template {
 	//The custom template is missing
 	htmlPageTemplate := template.New("")
 
-	//Default template
-	templateDefault :=
-		`<!doctype html>
-	<html>
-		<head>
-			<meta charset="utf-8">
-			<title>{{.Path}} - Horizon</title>
-		</head>
-		<body>
-			<h2>{{.Path}}</h2>
-			<p><a href={{.UpPath}}>` + locale.Go_top_tmpl + `</a></p>
-			<table align='left' border=1 cellpadding=5>
-				<th align='left'>` + locale.Name_tmpl + `</th>
-				<th align='left'>` + locale.Size_tmpl + `</th>
-				<th align='left'>` + locale.Mode_tmpl + `</th>
-				<th align='left'>` + locale.ModTime_tmpl + `</th>
-				<th align='left'>` + locale.Owner_tmpl + `</th>
-				<th align='left'>` + locale.Group_tmpl + `</th>
-
-				{{range .Files}}
-				<tr>
-					<td><a href={{.Path}}>{{.Name}}</a></td>
-					<td>{{.Size}}</td>
-					<td>{{.Mode}}</td>
-					<td>{{.ModTime}}</td>
-					<td>{{.Owner}} ({{.Uid}})</td>
-					<td>{{.Group}} ({{.Gid}})</td>
-				</tr>
-				{{end}}
-					
-			</table>
-		</body>
-	</html>`
-
 	htmlPageTemplate.Parse(templateDefault)
 
 	return htmlPageTemplate
