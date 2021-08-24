@@ -38,15 +38,21 @@ Build project and man pages.
 
 **Environment variables**: `GO`, `GOOS`, `GOARCH`, `LDFLAGS`
 
+**Dependencies**: `make configure`
+
 ## make release
 Builds a project for all supported arch and OS, creates packages and creates an archive with man pages.
 
 **Environment variables**: `GO`, `LDFLAGS`
 
+**Dependencies**: `make configure`
+
 ## make install
 Installs program.
 
 **Environment variables**: `DESTDIR`, `GOOS`, `GOARCH`
+
+**Dependencies**: `make`
 
 ## make uninstall
 Uninstalls program.
@@ -57,6 +63,8 @@ Uninstalls program.
 Builds the installer using Inno Setup.
 
 **Environment variables**: `ISCC`, `GOARCH`
+
+**Dependencies**: `make`
 
 ## make clean
 Deletes all files created during configuration and build.

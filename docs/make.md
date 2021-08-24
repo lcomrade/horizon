@@ -47,21 +47,29 @@ Build project and man pages.
 
 **Environment variables**: `GOOS`, `GOARCH`, `LDFLAGS`
 
+**Dependencies**: `make configure`
+
 ## make man
 Build only man pages.
 
 ## make test
 Tests the project with automated tests.
 
+**Dependencies**: `make configure`
+
 ## make release
 Builds a project for all supported arch and OS, creates packages and creates an archive with man pages.
 
 **Environment variables**: `LDFLAGS`, `VERSION`, `MAINTAINER`
 
+**Dependencies**: `make configure`
+
 ## make install
 Installs program.
 
 **Environment variables**: `DESTDIR`, `PREFIX`, `GOOS`, `GOARCH`
+
+**Dependencies**: `make`
 
 ## make uninstall
 Uninstalls program.
