@@ -1,2 +1,3 @@
 /dist/*
 /internal/build/*
+/build/windows/build.iss
