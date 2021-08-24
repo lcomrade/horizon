@@ -1,3 +1,5 @@
+`NOTE:` If you need **build and installation example**, see the 'Example' section.
+
 # Environment variables
 It is not necessary to specify those environment variables for which a default value is specified.
 
@@ -83,3 +85,9 @@ Creates the deb package.
 
 ## make clean
 Deletes all files created during configuration and build.
+
+# Example
+1. **Configure build:** `make configure`
+2. **Create binary file:** `make`
+3. **Pack man pages:** `make man`
+4. **Install:** `make install`

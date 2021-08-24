@@ -1,3 +1,5 @@
+`NOTE:` If you need **build and installation example**, see the 'Example' section.
+
 # Environment variables
 It is not necessary to specify those environment variables for which a default value is specified.
 
@@ -68,3 +70,9 @@ Builds the installer using Inno Setup.
 
 ## make clean
 Deletes all files created during configuration and build.
+
+# Example
+1. **Set go.exe location:** `set GO="C:\go\bin\go.exe"`
+2. **Configure build:** `make configure`
+3. **Create binary file:** `make`
+4. **Install:** `make install`
