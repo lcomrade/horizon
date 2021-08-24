@@ -56,12 +56,15 @@ Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 
 [Files]
 Source: "{#RootDir}\dist\horizon.windows.{#GOARCH}.exe"; DestDir: "{win}"; DestName: "{#AppName}.exe"; Flags: ignoreversion
+Source: "{#RootDir}\LICENSE"; DestDir: "{commonpf}\{#AppName}"; DestName: "LICENSE.txt"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{win}\{#AppName}.exe"; WorkingDir: "{sd}"; Comment: "{#AppComment}"
+Name: "{group}\LICENSE"; Filename: "{commonpf}\{#AppName}\LICENSE.txt"
 Name: "{group}\{#AppName} URL"; Filename: "{#AppURL}"
 
 [UninstallDelete]
 Type: files; Name: "{win}\{#AppName}.exe"
 Type: filesandordirs; Name: "{group}"
+Type: filesandordirs; Name: "{commonpf}\{#AppName}"
 Type: filesandordirs; Name: "{commonpf}\Uninstall Information\{#AppName}"

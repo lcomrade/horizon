@@ -169,3 +169,4 @@ deb:
 clean:
 	rm -rf dist/
 	rm -rf internal/build/
+	rm -f build/windows/build.iss
