@@ -1,11 +1,14 @@
 @set NAME=horizon
 @if "%VERSION%"=="" (set VERSION=nil)
+@if "%MAINTAINER%"=="" (set MAINTAINER=nil)
 @set SysConfigDir=%PROGRAMDATA%\horizon\
 @set UserHomeEnvVar=APPDATA
 @set UserConfigDir=horizon\
 @set LangEnvVar=LANG
 
-@if "%GO%"=="" (set GO=go)
+@if %GO%=="" (set GO=go)
+@if %ISCC%=="" (set ISCC=ISCC)
+
 @if "%GOOS%"=="" (
 	@for /F "tokens=*" %%i in ('%GO% env GOOS') do set GOOS=%%i
 )
@@ -22,9 +25,10 @@
 @if "%~1"=="release" (Call :release & exit /B)
 @if "%~1"=="install" (Call :install & exit /B)
 @if "%~1"=="uninstall" (Call :uninstall & exit /B)
+@if "%~1"=="installer" (Call :installer & exit /B)
 @if "%~1"=="clean" (Call :clean & exit /B)
 
-@echo Usage: %~0 [configure^|release^|install^|uninstall^|clean]...
+@echo Usage: %~0 [configure^|release^|install^|uninstall^|installer^|clean]...
 @exit /B 2
 
 :all
@@ -43,6 +47,14 @@
 	echo var UserHomeEnvVar = "%UserHomeEnvVar%" >> internal\build\build.go
 	echo var UserConfigDir = `%UserConfigDir%` >> internal\build\build.go
 	echo var LangEnvVar = "%LangEnvVar%" >> internal\build\build.go
+	
+	md build\windows\
+	echo #define AppName "%NAME%" > build\windows\build.iss
+	echo #define AppVersion "%VERSION%" >> build\windows\build.iss
+	echo #define GOARCH "%GOARCH%" >> build\windows\build.iss
+	echo #define MAINTAINER "%MAINTAINER%" >> build\windows\build.iss
+	echo #define AppComment "Horizon - minimalist WEB-server for data transfer via HTTP" >> build\windows\build.iss
+	echo #define AppURL "https://github.com/lcomrade/horizon" >> build\windows\build.iss
 	
 	@exit /B
 
@@ -69,8 +81,14 @@
 	
 	@exit /B
 
+:installer
+	%ISCC% /O"%CD%\dist" /F"horizon.windows.%GOARCH%.setup" "%CD%\build\windows\setup.iss"
+
+	@exit /B
+
 :clean
 	rd /S /Q dist\
 	rd /S /Q internal\build\
+	del /S /Q build\windows\build.iss
 	
 	@exit /B
