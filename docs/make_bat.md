@@ -4,6 +4,8 @@ It is not necessary to specify those environment variables for which a default v
 ## Configuration
 `VERSION` - specifies the version (default: `nil`)
 
+`MAINTAINER` - name of the package maintainer (default: `nil`)
+
 ## Go compiler parameters
 `GO` - path to Go compiler (default: `go`)
 
@@ -17,6 +19,9 @@ To get the full list of ldfalgs run `go tool link -ldfalgs`.
 
 `LDFLAGS` - go compiler flags (default: `-w -s`)
 
+## Inno Setup parameters
+`ISCC` - path to ISCC compiler (default: `ISCC`)
+
 ## Installation paths
 `DESTDIR` - installation path (default: `%WINDIR%`)
 
@@ -26,7 +31,7 @@ After the build, the program and documentation will appear in the `./dist` direc
 ## make configure
 Configures the project and prepares it for build.
 
-**Environment variables**: `VERSION`
+**Environment variables**: `VERSION`, `MAINTAINER`
 
 ## make
 Build project and man pages.
@@ -47,6 +52,11 @@ Installs program.
 Uninstalls program.
 
 **Environment variables**: `DESTDIR`
+
+## make installer
+Builds the installer using Inno Setup.
+
+**Environment variables**: `ISCC`, `GOARCH`
 
 ## make clean
 Deletes all files created during configuration and build.
