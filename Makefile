@@ -124,6 +124,10 @@ deb:
 	mkdir -p $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/
 	cp -r build/deb/* $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/
 	
+	mkdir -p $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/horizon/
+	cp README.md $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/horizon/
+	cp docs/configure.md $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/horizon/
+	
 	chmod 755 $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/postinst
 	chmod 755 $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/postrm
 	chmod 755 $(DEB_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/etc/init.d/horizon

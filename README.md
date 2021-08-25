@@ -49,5 +49,7 @@ The program comes as a single binary file and can easily be ported to a UNIX-lik
 Configuration documentation is supplied as man pages. If you installed Horizon from a DEB package or using `make install` the documentation is already installed.
 Otherwise, you can download the latest documentation from [here](https://github.com/lcomrade/horizon/releases/latest/download/man.tar).
 
+If you want to know more about configuration files read [configure.md](https://github.com/lcomrade/horizon/blob/main/docs/configure.md)
+
 ## Bugs and Suggestion
 If you find a bug or have a suggestion, create an Issue [here](https://github.com/lcomrade/horizon/issues)
