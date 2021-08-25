@@ -1,4 +1,4 @@
-#define RootDir "C:\horizon"
+﻿#define RootDir "C:\horizon"
 
 #include AddBackslash(SourcePath) + "build.iss"
 
@@ -54,6 +54,22 @@ WizardStyle=classic
 Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
 
+[CustomMessages]
+;; english.LANG=en
+english.License=License
+english.Help=Help
+english.Manual=Manual
+english.ShareWith=Share with
+
+;; russian.LANG=ru
+russian.License=Лицензия
+russian.Help=Помощь
+russian.Manual=Руководство
+russian.ShareWith=Поделится с помощью
+
+[InstallDelete]
+Type: filesandordirs; Name: "{group}"
+
 [Files]
 Source: "{#RootDir}\dist\horizon.windows.{#GOARCH}.exe"; DestDir: "{win}"; DestName: "{#AppName}.exe"; Flags: ignoreversion
 
@@ -65,15 +81,16 @@ Source: "{#RootDir}\docs\windows\horizon.txt"; DestDir: "{win}\Help\{#AppName}";
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{win}\{#AppName}.exe"; WorkingDir: "{sd}"; Comment: "{#AppComment}"
 
-Name: "{group}\LICENSE"; Filename: "{win}\Help\{#AppName}\LICENSE.txt"
+Name: "{group}\{cm:License}"; Filename: "{win}\Help\{#AppName}\LICENSE.txt"
 Name: "{group}\{#AppName} URL"; Filename: "{#AppURL}"
 
-Name: "{group}\Help\README.md"; Filename: "{win}\Help\{#AppName}\README.md"
-Name: "{group}\Help\configure.md"; Filename: "{win}\Help\{#AppName}\horizon-configure.md"
-Name: "{group}\Help\Manual"; Filename: "{win}\Help\{#AppName}\horizon.txt"
+Name: "{group}\{cm:Help}\README.md"; Filename: "{win}\Help\{#AppName}\README.md"
+Name: "{group}\{cm:Help}\configure.md"; Filename: "{win}\Help\{#AppName}\horizon-configure.md"
+Name: "{group}\{cm:Help}\{cm:Manual}"; Filename: "{win}\Help\{#AppName}\horizon.txt"
 
 [Registry]
-Root: HKCR; Subkey: "Directory\Background\shell\{#AppName}"; ValueType: string; ValueData: "Open {#AppName} here"; Flags: uninsdeletekey
+;; Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "LANG"; ValueData: "{cm:LANG}"; Flags: uninsdeletevalue
+Root: HKCR; Subkey: "Directory\Background\shell\{#AppName}"; ValueType: string; ValueData: "{cm:ShareWith} {#AppName}"; Flags: uninsdeletekey
 Root: HKCR; Subkey: "Directory\Background\shell\{#AppName}\command"; ValueType: string; ValueData: "horizon.exe -dir %V"; Flags: uninsdeletekey
 
 [UninstallDelete]
