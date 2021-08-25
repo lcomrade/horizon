@@ -72,6 +72,10 @@ Name: "{group}\Help\README.md"; Filename: "{win}\Help\{#AppName}\README.md"
 Name: "{group}\Help\configure.md"; Filename: "{win}\Help\{#AppName}\horizon-configure.md"
 Name: "{group}\Help\Manual"; Filename: "{win}\Help\{#AppName}\horizon.txt"
 
+[Registry]
+Root: HKCR; Subkey: "Directory\Background\shell\{#AppName}"; ValueType: string; ValueData: "Open {#AppName} here"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "Directory\Background\shell\{#AppName}\command"; ValueType: string; ValueData: "horizon.exe -dir %V"; Flags: uninsdeletekey
+
 [UninstallDelete]
 Type: files; Name: "{win}\{#AppName}.exe"
 Type: filesandordirs; Name: "{group}"
