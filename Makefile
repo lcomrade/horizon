@@ -88,18 +88,18 @@ release:
 	rm -rf dist/man/
 
 	#Windows
-	echo 'package build' > internal/build/build.go
-	echo '' >> internal/build/build.go
-	echo 'var Name = "$(NAME)"' >> internal/build/build.go
-	echo 'var Version = "$(VERSION)"' >> internal/build/build.go
-	echo 'var SysConfigDir = `C:\ProgramData\horizon\`' >> internal/build/build.go
-	echo 'var UserHomeEnvVar = "APPDATA"' >> internal/build/build.go
-	echo 'var UserConfigDir = `horizon\`' >> internal/build/build.go
-	echo 'var LangEnvVar = "LANG"' >> internal/build/build.go
+	#echo 'package build' > internal/build/build.go
+	#echo '' >> internal/build/build.go
+	#echo 'var Name = "$(NAME)"' >> internal/build/build.go
+	#echo 'var Version = "$(VERSION)"' >> internal/build/build.go
+	#echo 'var SysConfigDir = `C:\ProgramData\horizon\`' >> internal/build/build.go
+	#echo 'var UserHomeEnvVar = "APPDATA"' >> internal/build/build.go
+	#echo 'var UserConfigDir = `horizon\`' >> internal/build/build.go
+	#echo 'var LangEnvVar = "LANG"' >> internal/build/build.go
 
-	GOOS=windows GOARCH=386    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.386.exe $(MAIN_GO)
-	GOOS=windows GOARCH=amd64  go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.amd64.exe $(MAIN_GO)
-	GOOS=windows GOARCH=arm    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.arm.exe $(MAIN_GO)
+	#GOOS=windows GOARCH=386    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.386.exe $(MAIN_GO)
+	#GOOS=windows GOARCH=amd64  go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.amd64.exe $(MAIN_GO)
+	#GOOS=windows GOARCH=arm    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.arm.exe $(MAIN_GO)
 
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin/
