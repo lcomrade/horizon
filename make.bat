@@ -17,6 +17,7 @@
 )
 @if "%LDFLAGS%"=="" (set LDFLAGS=-w -s)
 @set MAIN_GO=.\cmd\horizon.go
+@set MAIN_ISS="%CD%\build\windows\setup.iss"
 
 @if "%DESTDIR%"=="" (set DESTDIR=%WINDIR%)
 
@@ -64,10 +65,23 @@
 	set GOOS=windows
 	set GOARCH=386
 	%GO% build -ldflags="%LDFLAGS%" -o dist\%NAME%.windows.386.exe %MAIN_GO%
+	
 	set GOARCH=amd64
 	%GO% build -ldflags="%LDFLAGS%" -o dist\%NAME%.windows.amd64.exe %MAIN_GO%
+	
 	set GOARCH=arm
 	%GO% build -ldflags="%LDFLAGS%" -o dist\%NAME%.windows.arm.exe %MAIN_GO%
+
+
+	md build\windows\
+	echo #define AppName "%NAME%" > build\windows\build.iss
+	echo #define AppVersion "%VERSION%" >> build\windows\build.iss
+	echo #define MAINTAINER "%MAINTAINER%" >> build\windows\build.iss
+	echo #define AppComment "Horizon - minimalist WEB-server for data transfer via HTTP" >> build\windows\build.iss
+	echo #define AppURL "https://github.com/lcomrade/horizon" >> build\windows\build.iss
+
+	%ISCC% /DGOARCH=386 /O"%CD%\dist" /F"%NAME%.windows.386.setup" %MAIN_ISS%
+	%ISCC% /DGOARCH=amd64 /O"%CD%\dist" /F"%NAME%.windows.amd64.setup" %MAIN_ISS%
 	
 	@exit /B
 
@@ -82,7 +96,7 @@
 	@exit /B
 
 :installer
-	%ISCC% /O"%CD%\dist" /F"horizon.windows.%GOARCH%.setup" "%CD%\build\windows\setup.iss"
+	%ISCC% /O"%CD%\dist" /F"%NAME%.windows.%GOARCH%.setup" %MAIN_ISS%
 
 	@exit /B
 
