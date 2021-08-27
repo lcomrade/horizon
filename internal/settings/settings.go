@@ -37,6 +37,7 @@ import (
 //Used to read a configuration file
 type ConfigType struct {
 	HttpServer      HttpServerType
+	Logging         LoggingType
 	ShowHiddenFiles bool
 	HumanFileSize   bool
 	ModTimeFormat   string
@@ -49,6 +50,10 @@ type HttpServerType struct {
 	KeyFile   string
 }
 
+type LoggingType struct {
+	Level string // Info | Warning | Error
+}
+
 //Default configuration
 var ConfigDefault = ConfigType{
 	HttpServer: HttpServerType{
@@ -56,6 +61,9 @@ var ConfigDefault = ConfigType{
 		EnableTLS: false,
 		CertFile:  "",
 		KeyFile:   "",
+	},
+	Logging: LoggingType{
+		Level: "Info",
 	},
 	ShowHiddenFiles: false,
 	HumanFileSize:   true,
@@ -165,6 +173,9 @@ var HtmlTemplate *template.Template
 var ResourcesDir string
 
 func Main() {
+	//Logging
+	logger.SetLevel(Config.Logging.Level)
+
 	//Flags
 	ArgDir = flag.String("dir", ".", locale.Dir_flag)
 	ArgConfigDir = flag.String("config-dir", "", locale.Config_dir_flag)

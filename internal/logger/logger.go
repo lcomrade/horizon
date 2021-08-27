@@ -20,6 +20,7 @@
 package logger
 
 import (
+	"io/ioutil"
 	"log"
 	"os"
 )
@@ -27,3 +28,22 @@ import (
 var Info = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 var Warning = log.New(os.Stdout, "WARNING\t", log.Ldate|log.Ltime|log.Lshortfile)
 var Error = log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+
+func SetLevel(level string) {
+	if level == "Info" {
+		return
+	}
+
+	if level == "Warning" {
+		Info.SetOutput(ioutil.Discard)
+		return
+	}
+
+	if level == "Error" {
+		Info.SetOutput(ioutil.Discard)
+		Warning.SetOutput(ioutil.Discard)
+		return
+	}
+
+	return
+}

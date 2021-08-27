@@ -8,6 +8,9 @@
     "CertFile":  "",
     "KeyFile":   ""
   },
+  "Logging": {
+  	"Level": "Info"
+  },
   "ShowHiddenFiles": false,
   "HumanFileSize": true,
   "ModTimeFormat": "2006 Jan 2 15:04"
@@ -43,6 +46,17 @@ Specifies the **port and ip** address that the server is listening to (default: 
   }
 }
 
+```
+
+## Logging
+`Level` - specifies the events to be logged. Possible values: `Info`, `Warning`, `Error` (default: `Info`)
+
+```
+{
+  "Logging": {
+  	"Level": "Info"
+  }
+}
 ```
 
 ## Web Interface

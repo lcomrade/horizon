@@ -200,6 +200,9 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 func main() {
 	settings.Main()
 
+	//Logging
+	logger.SetLevel(settings.Config.Logging.Level)
+
 	//## WEB SERVER ##
 	//Handlers assignment
 	http.HandleFunc("/", MainHandler)
