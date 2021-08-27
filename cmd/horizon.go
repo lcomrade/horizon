@@ -130,7 +130,9 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 	pathStat, err := os.Stat(path)
 	if err != nil {
 		if os.IsNotExist(err) {
-			logger.Info.Println(err)
+			if settings.Config.Logging.Log404Request == true {
+				logger.Request.Println(r.RemoteAddr, err)
+			}
 			http.Error(rw, err.Error(), 404)
 			return
 		} else {
@@ -138,6 +140,11 @@ func MainHandler(rw http.ResponseWriter, r *http.Request) {
 			http.Error(rw, err.Error(), 400)
 			return
 		}
+	}
+
+	//Log request
+	if settings.Config.Logging.LogRequest == true {
+		logger.Request.Println(r.RemoteAddr, r.URL.Path)
 	}
 
 	//Directory or file?

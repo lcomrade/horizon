@@ -15,7 +15,7 @@ Horizon uses the configuration files located in the \fB$HOME/.config/horizon/\fR
     Contains custom resources that will be available but will not appear in the file list. For example it can be used for CSS styles or favicon.ico.
 .PP
 .SH  config.json
-Here is an example of a configuration file with all default values.
+Here is an example of a configuration file with all default values. To learn more about the parameters, read \fB/usr/share/doc/horizon/configure.md\fR
 .PP
 .nf
 {
@@ -26,7 +26,9 @@ Here is an example of a configuration file with all default values.
     "KeyFile":   ""
   },
   "Logging": {
-  	"Level": "Info"
+  	"Level": "Info",
+  	"LogRequest": true,
+  	"Log404Request": true
   },
   "ShowHiddenFiles": false,
   "HumanFileSize": true,

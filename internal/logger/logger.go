@@ -29,6 +29,8 @@ var Info = log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
 var Warning = log.New(os.Stdout, "WARNING\t", log.Ldate|log.Ltime|log.Lshortfile)
 var Error = log.New(os.Stderr, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 
+var Request = log.New(os.Stdout, "REQUEST\t", log.Ldate|log.Ltime)
+
 func SetLevel(level string) {
 	if level == "Info" {
 		return

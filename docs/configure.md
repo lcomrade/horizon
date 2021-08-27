@@ -9,7 +9,9 @@
     "KeyFile":   ""
   },
   "Logging": {
-  	"Level": "Info"
+  	"Level": "Info",
+  	"LogRequest": true,
+  	"Log404Request": true
   },
   "ShowHiddenFiles": false,
   "HumanFileSize": true,
@@ -49,12 +51,16 @@ Specifies the **port and ip** address that the server is listening to (default: 
 ```
 
 ## Logging
-`Level` - specifies the events to be logged. Possible values: `Info`, `Warning`, `Error` (default: `Info`)
+`Level` - specifies the events to be logged. Possible values: `Info`, `Warning`, `Error` (default: `"Info"`)
+`LogRequest` - logs all successful requests (default: `true`)
+`Log404Request` - logs all 404 error requests (default: `true`)
 
 ```
 {
   "Logging": {
-  	"Level": "Info"
+  	"Level": "Info",
+  	"LogRequest": true,
+  	"Log404Request": true
   }
 }
 ```

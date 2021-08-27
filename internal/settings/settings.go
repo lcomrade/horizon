@@ -51,7 +51,9 @@ type HttpServerType struct {
 }
 
 type LoggingType struct {
-	Level string // Info | Warning | Error
+	Level         string // Info | Warning | Error
+	LogRequest    bool
+	Log404Request bool
 }
 
 //Default configuration
@@ -63,7 +65,9 @@ var ConfigDefault = ConfigType{
 		KeyFile:   "",
 	},
 	Logging: LoggingType{
-		Level: "Info",
+		Level:         "Info",
+		LogRequest:    true,
+		Log404Request: true,
 	},
 	ShowHiddenFiles: false,
 	HumanFileSize:   true,
