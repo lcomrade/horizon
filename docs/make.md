@@ -33,6 +33,8 @@ To get the full list of ldfalgs run `go tool link -ldfalgs`.
 ## Creating packages
 `DEBARCH` - architecture for which the deb package is created
 
+`RPMARCH` - architecture for which the rpm package is created
+
 `MAINTAINER` - name of the package maintainer in the format `Name <mail@example.org>` (default: `nil <nil>`)
 
 
@@ -82,6 +84,11 @@ Uninstalls program.
 Creates the deb package.
 
 **Environment variables**: `GOOS`, `GOARCH`, `VERSION`, `DEBARCH`, `MAINTAINER`
+
+## make rpm
+Creates the rpm package.
+
+**Environment variables**: `GOOS`, `GOARCH`, `VERSION`, `RPMARCH`, `MAINTAINER`
 
 ## make clean
 Deletes all files created during configuration and build.
