@@ -202,24 +202,25 @@ rpm:
 	echo 'encryption and a custom HTTP page template.' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%post' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '/sbin/update-rc.d horizon defaults' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '/bin/systemctl daemon-reload' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo 'if [ -f "/sbin/update-rc.d" ]; then /sbin/update-rc.d horizon defaults; fi' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo 'if [ -f "/bin/systemctl" ]; then /bin/systemctl daemon-reload; fi' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%postun' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '/sbin/update-rc.d horizon defaults' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '/bin/systemctl daemon-reload' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo 'if [ -f "/sbin/update-rc.d" ]; then /sbin/update-rc.d horizon defaults; fi' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo 'if [ -f "/bin/systemctl" ]; then /bin/systemctl daemon-reload; fi' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%files' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%defattr(-,root,root)' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '/usr/bin/' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '/usr/share/' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '/lib/' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '/etc/' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo '/usr/bin/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo '/usr/share/bash-completion/completions/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo '/lib/systemd/system/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo '/etc/init.d/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo '/etc/logrotate.d/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%doc /usr/share/doc/$(NAME)/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%doc /usr/share/man/man?/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%changelog' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '* $(shell date -R) $(MAINTAINER) - $(VERSION)-1' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo '* $(shell date "+%a %b %d %Y") $(MAINTAINER) - $(VERSION)-1' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '- https://github.com/lcomrade/horizon/releases' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 
 	DESTDIR=$(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH) PREFIX=/usr make install
