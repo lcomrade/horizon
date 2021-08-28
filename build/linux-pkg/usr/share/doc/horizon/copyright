@@ -3,7 +3,7 @@ Upstream-Name: horizon
 Upstream-Contact: 
 Source: https://github.com/lcomrade/horizon
 Files:
- main.go
+ cmd/*
  internal/*
 Copyright: 2021 Leonid Maslakov
 License: GPL-3.0-or-later
