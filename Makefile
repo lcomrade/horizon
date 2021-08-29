@@ -13,6 +13,10 @@ MAIN_GO = ./cmd/horizon.go
 PREFIX ?= /usr/local
 
 MAINTAINER ?= nil <nil>
+SITE_URL = https://github.com/lcomrade/horizon
+SITE_RELEASE_URL = https://github.com/lcomrade/horizon/releases/tag/v$(VERSION)
+
+
 TMP_BUILD_DIR := /tmp/$(NAME)_build_$(shell head -c 100 /dev/urandom | base64 | sed 's/[+=/A-Z]//g' | tail -c 10)
 
 .PHONY: all man configure test release install uninstall deb clean
@@ -147,7 +151,7 @@ deb:
 	echo 'Priority: optional' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Section: net' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Maintainer: $(MAINTAINER)' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
-	echo 'Origin: https://github.com/lcomrade/horizon' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
+	echo 'Origin: $(SITE_URL)' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo 'Description: Minimalist WEB-server for data transfer via HTTP' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo ' Horizon is a simple program that performs the' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
 	echo ' single function of transferring data using the HTTP protocol.' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/DEBIAN/control
@@ -156,7 +160,7 @@ deb:
 
 	echo '$(NAME) ($(VERSION)) stable; urgency=medium' > $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/$(NAME)/changelog
 	echo '  ' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/$(NAME)/changelog
-	echo '  * https://github.com/lcomrade/horizon/releases' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/$(NAME)/changelog
+	echo '  * $(SITE_RELEASE_URL)' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/$(NAME)/changelog
 	echo '  ' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/$(NAME)/changelog
 	echo ' -- $(MAINTAINER)  $(shell date -R)' >> $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/usr/share/doc/$(NAME)/changelog
 
@@ -194,6 +198,7 @@ rpm:
 	echo 'Summary: Minimalist WEB-server for data transfer via HTTP' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo 'Packager: $(MAINTAINER)' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo 'License: GPLv3+' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo 'URL: $(SITE_URL)' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%description' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo 'Horizon is a simple program that performs the' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
@@ -221,7 +226,7 @@ rpm:
 	echo '' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%changelog' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '* $(shell date "+%a %b %d %Y") $(MAINTAINER) - $(VERSION)-1' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
-	echo '- https://github.com/lcomrade/horizon/releases' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo '- $(SITE_RELEASE_URL)' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 
 	DESTDIR=$(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH) PREFIX=/usr make install
 
