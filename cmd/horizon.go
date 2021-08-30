@@ -26,6 +26,7 @@ import (
 	"../internal/locale"
 	"../internal/logger"
 	"../internal/settings"
+	"../pkg/filesize"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -75,31 +76,25 @@ func ConvertFileSize(size int64) string {
 		return fmt.Sprint(size)
 	}
 
-	//TB
-	if size >= 1099511627776 {
-		sizeTmp := size / 1099511627776
-		return fmt.Sprint(sizeTmp) + " " + locale.TB
+	sizeStr1, sizeStr2 := filesize.HumanReadable(size)
+	
+	if sizeStr2 == "TB" {
+		return sizeStr1 + " " + locale.TB
 	}
 
-	//GB
-	if size >= 1073741824 {
-		sizeTmp := size / 1073741824
-		return fmt.Sprint(sizeTmp) + " " + locale.GB
+	if sizeStr2 == "GB" {
+		return sizeStr1 + " " + locale.GB
 	}
 
-	//MB
-	if size >= 1048576 {
-		sizeTmp := size / 1048576
-		return fmt.Sprint(sizeTmp) + " " + locale.MB
+	if sizeStr2 == "MB" {
+		return sizeStr1 + " " + locale.MB
 	}
 
-	//KB
-	if size >= 1024 {
-		sizeTmp := size / 1024
-		return fmt.Sprint(sizeTmp) + " " + locale.KB
+	if sizeStr2 == "KB" {
+		return sizeStr1 + " " + locale.KB
 	}
-
-	return fmt.Sprint(size)
+	
+	return sizeStr1 + " " + sizeStr2
 }
 
 func GetFileInfo(file os.FileInfo, path string) FilesType {
