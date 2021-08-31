@@ -142,7 +142,7 @@
 	
 	md dist\
 	cd build\windows\choco\
-	choco pack --out %BUILD_ROOT%\dist\%NAME%.%VERSION%.nupkg
+	choco pack --outdir %BUILD_ROOT%\dist\
 	cd %BUILD_ROOT%
 	
 	@exit /B
