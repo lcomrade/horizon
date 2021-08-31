@@ -1,3 +1,5 @@
+@set BUILD_ROOT=%CD%
+
 @set NAME=horizon
 @if "%VERSION%"=="" (set VERSION=nil)
 @if "%MAINTAINER%"=="" (set MAINTAINER=nil)
@@ -10,10 +12,10 @@
 @if %ISCC%=="" (set ISCC=ISCC)
 
 @if "%GOOS%"=="" (
-	@for /F "tokens=*" %%i in ('%GO% env GOOS') do set GOOS=%%i
+	@for /F "tokens=*" %%i in ('%GO% env GOOS') do @set GOOS=%%i
 )
 @if "%GOARCH%"=="" (
-	@for /F "tokens=*" %%i in ('%GO% env GOARCH') do set GOARCH=%%i
+	@for /F "tokens=*" %%i in ('%GO% env GOARCH') do @set GOARCH=%%i
 )
 @if "%LDFLAGS%"=="" (set LDFLAGS=-w -s)
 @set MAIN_GO=.\cmd\horizon.go
@@ -27,9 +29,10 @@
 @if "%~1"=="install" (Call :install & exit /B)
 @if "%~1"=="uninstall" (Call :uninstall & exit /B)
 @if "%~1"=="installer" (Call :installer & exit /B)
+@if "%~1"=="choco" (Call :choco & exit /B)
 @if "%~1"=="clean" (Call :clean & exit /B)
 
-@echo Usage: %~0 [configure^|release^|install^|uninstall^|installer^|clean]...
+@echo Usage: %~0 [configure^|release^|install^|uninstall^|installer^|choco^|clean]...
 @exit /B 2
 
 :all
@@ -83,6 +86,9 @@
 	%ISCC% /DGOARCH=386 /O"%CD%\dist" /F"%NAME%.windows.386.setup" %MAIN_ISS%
 	%ISCC% /DGOARCH=amd64 /O"%CD%\dist" /F"%NAME%.windows.amd64.setup" %MAIN_ISS%
 	
+	
+	call make choco
+	
 	@exit /B
 
 :install
@@ -99,10 +105,52 @@
 	%ISCC% /O"%CD%\dist" /F"%NAME%.windows.%GOARCH%.setup" %MAIN_ISS%
 
 	@exit /B
+	
+:choco
+	md build\windows\choco\
+	echo ^<^?xml version="1.0" encoding="utf-8"^?^> > build\windows\choco\%NAME%.nuspec
+	echo ^<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd"^> >> build\windows\choco\%NAME%.nuspec
+	echo   ^<metadata^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<id^>%NAME%^</id^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<version^>%VERSION%^</version^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<title^>%NAME% (Install)^</title^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<authors^>lcomrade^</authors^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<projectUrl^>https://github.com/lcomrade/horizon^</projectUrl^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<tags^>horizon cli web server command-line gplv3 file-sharing^</tags^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<summary^>Minimalist WEB-server for data transfer via HTTP^</summary^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<description^>Horizon - minimalist WEB-server for data transfer via HTTP^</description^> >> build\windows\choco\%NAME%.nuspec
+	echo   ^</metadata^> >> build\windows\choco\%NAME%.nuspec
+	echo   ^<files^> >> build\windows\choco\%NAME%.nuspec
+	echo     ^<file src="tools\**" target="tools" /^> >> build\windows\choco\%NAME%.nuspec
+	echo   ^</files^> >> build\windows\choco\%NAME%.nuspec
+	echo ^</package^> >> build\windows\choco\%NAME%.nuspec
+	
+	md build\windows\choco\tools\
+	echo $ErrorActionPreference = 'Stop'; > build\windows\choco\tools\chocolateyinstall.ps1
+	echo $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)" >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo $packageArgs = @{ >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   packageName   = $env:ChocolateyPackageName >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   unzipLocation = $toolsDir >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   fileType      = 'exe' >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   url           = 'https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.386.setup.exe' >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   url64bit      = 'https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.amd64.setup.exe' >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   softwareName  = '%NAME%^*' >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   silentArgs   = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-' >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   validExitCodes= @(0) >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo } >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo Install-ChocolateyPackage @packageArgs >> build\windows\choco\tools\chocolateyinstall.ps1
+	
+	md dist\
+	cd build\windows\choco\
+	choco pack --out %BUILD_ROOT%\dist\%NAME%.%VERSION%.nupkg
+	cd %BUILD_ROOT%
+	
+	@exit /B
 
 :clean
 	rd /S /Q dist\
 	rd /S /Q internal\build\
 	del /S /Q build\windows\build.iss
+	del /S /Q build\windows\choco\
 	
 	@exit /B
