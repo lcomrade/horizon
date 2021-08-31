@@ -16,9 +16,16 @@ The program comes as a single binary file and can easily be ported to a UNIX-lik
 - Free license: GNU GPL 3+
 
 ## Installation
-### Debian/Ubuntu
-1. Download the DEB package for your architecture from the [release](https://github.com/lcomrade/horizon/releases/latest) page
-2. Install the downloaded DEB package
+### GNU/Linux
+Under Linux there are several options available. All of them can be found on the [release](https://github.com/lcomrade/horizon/releases/latest) page:
+- DEB
+- RPM
+- Lonely binary
+
+### Windows
+- Installer: [32bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.386.setup.exe) [64bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.amd64.setup.exe)
+- Install from chocolatey: `choco install -y horizon`
+- Or download lonely binary: [32bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.386.exe) [64bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.amd64.exe) [arm](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.arm.exe)
 
 ### Another GNU/Linux or FreeBSD/OpenBSD/NetBSD
 1. Download a binary file for your OS and architecture from the [release](https://github.com/lcomrade/horizon/releases/latest) page
@@ -26,10 +33,6 @@ The program comes as a single binary file and can easily be ported to a UNIX-lik
 3. Place program in `/usr/local/bin/` or in another directory provided for installing binary files
 
 `NOTE:` If you need man pages you can find it [here](https://github.com/lcomrade/horizon/releases/latest/download/man.tar)
-
-### Windows
-1. Download a binary file for your architecture from the [release](https://github.com/lcomrade/horizon/releases/latest) page
-2. Place program in `C:\Windows\` or in another directory provided for installing binary files
 
 ### Compiling from source code
 1. Install `Go`, `GNU Make` and `gzip`
