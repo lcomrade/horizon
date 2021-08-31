@@ -68,6 +68,11 @@ Builds the installer using Inno Setup.
 
 **Dependencies**: `make`
 
+## make choco
+Builds nupkg package for chocolatey.
+
+**Environment variables**: `VERSION`
+
 ## make clean
 Deletes all files created during configuration and build.
 
