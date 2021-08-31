@@ -181,16 +181,16 @@ deb:
 	rm -rf $(TMP_BUILD_DIR)/
 
 rpm:
-	mkdir -p $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH)/
+	mkdir -p $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION)-1.$(RPMARCH)/
 	mkdir -p $(TMP_BUILD_DIR)/SPECS/
 
-	cp -r build/linux-pkg/* $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH)/
+	cp -r build/linux-pkg/* $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION)-1.$(RPMARCH)/
 
-	mkdir -p $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH)/usr/share/doc/horizon/
-	cp README.md $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH)/usr/share/doc/horizon/
-	cp docs/configure.md $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH)/usr/share/doc/horizon/
+	mkdir -p $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION)-1.$(RPMARCH)/usr/share/doc/horizon/
+	cp README.md $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION)-1.$(RPMARCH)/usr/share/doc/horizon/
+	cp docs/configure.md $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION)-1.$(RPMARCH)/usr/share/doc/horizon/
 
-	chmod 755 $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH)/etc/init.d/horizon
+	chmod 755 $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION)-1.$(RPMARCH)/etc/init.d/horizon
 
 	echo 'Name: $(NAME)' > $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo 'Version: $(VERSION)' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
@@ -228,13 +228,10 @@ rpm:
 	echo '* $(shell date "+%a %b %d %Y") $(MAINTAINER) - $(VERSION)-1' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '- $(SITE_RELEASE_URL)' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 
-	DESTDIR=$(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH) PREFIX=/usr make install
-
-	echo '%_topdir $(TMP_BUILD_DIR)' > $(TMP_BUILD_DIR)/.rpmmacros
-	echo '%buildroot $(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION).$(RPMARCH)' >> $(TMP_BUILD_DIR)/.rpmmacros
+	DESTDIR=$(TMP_BUILD_DIR)/BUILDROOT/$(NAME)-$(VERSION)-1.$(RPMARCH) PREFIX=/usr make install
 	
 	
-	BUILDROOT=$(TMP_BUILD_DIR)/BUILDROOT rpmbuild --load=$(TMP_BUILD_DIR)/.rpmmacros -bb $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	BUILDROOT=$(TMP_BUILD_DIR)/BUILDROOT rpmbuild --target $(RPMARCH) --define '_topdir $(TMP_BUILD_DIR)' -bb $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 
 	mv $(TMP_BUILD_DIR)/RPMS/$(RPMARCH)/*.rpm dist/
 
