@@ -56,6 +56,9 @@ Build project and man pages.
 ## make man
 Build only man pages.
 
+## make docs
+Copy *NIX docs to dist/docs.
+
 ## make test
 Tests the project with automated tests.
 
@@ -97,4 +100,5 @@ Deletes all files created during configuration and build.
 1. **Configure build:** `make configure`
 2. **Create binary file:** `make`
 3. **Pack man pages:** `make man`
-4. **Install:** `make install`
+4. **Documentations:** `make docs`
+5. **Install:** `make install`

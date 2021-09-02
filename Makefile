@@ -19,7 +19,7 @@ SITE_RELEASE_URL = https://github.com/lcomrade/horizon/releases/tag/v$(VERSION)
 
 TMP_BUILD_DIR := /tmp/$(NAME)_build_$(shell head -c 100 /dev/urandom | base64 | sed 's/[+=/A-Z]//g' | tail -c 10)
 
-.PHONY: all man configure test release install uninstall deb clean
+.PHONY: all man docs configure test release install uninstall deb clean
 
 all:
 	@if [ ! -f "internal/build/build.go" ]; then make configure; fi
@@ -29,12 +29,19 @@ all:
 	chmod 755 dist/$(NAME).$(GOOS).$(GOARCH)
 
 	make man
+	make docs
 
 man:
 	mkdir -p dist/man/man1/
 	gzip -9 --no-name --force -c docs/man/man1/horizon.1 > dist/man/man1/horizon.1.gz
 	mkdir -p dist/man/man5/
 	gzip -9 --no-name --force -c docs/man/man5/horizon-configs.5 > dist/man/man5/horizon-configs.5.gz
+
+docs:
+	mkdir -p dist/docs/
+	cp LICENSE dist/docs/LICENSE
+	cp README.md dist/docs/README.md
+	cp docs/configure.md dist/docs/configure.md
 
 configure:
 	mkdir -p internal/build/
@@ -57,7 +64,9 @@ release:
 	mkdir -p dist/
 	
 	make man
-	tar --numeric-owner --owner=0 --group=0 --directory=dist/ -cf dist/man.tar man
+	make docs
+	tar --numeric-owner --owner=0 --group=0 --directory=dist/ -cf dist/nix_docs.tar man docs
+	rm -rf dist/docs
 
 	GOOS=linux GOARCH=386   go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).linux.386 $(MAIN_GO)
 	GOOS=linux GOARCH=amd64 go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).linux.amd64 $(MAIN_GO)
@@ -95,20 +104,6 @@ release:
 	GOOS=netbsd GOARCH=arm64  go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).netbsd.arm64 $(MAIN_GO)
 
 	rm -rf dist/man/
-
-	#Windows
-	#echo 'package build' > internal/build/build.go
-	#echo '' >> internal/build/build.go
-	#echo 'var Name = "$(NAME)"' >> internal/build/build.go
-	#echo 'var Version = "$(VERSION)"' >> internal/build/build.go
-	#echo 'var SysConfigDir = `C:\ProgramData\horizon\`' >> internal/build/build.go
-	#echo 'var UserHomeEnvVar = "APPDATA"' >> internal/build/build.go
-	#echo 'var UserConfigDir = `horizon\`' >> internal/build/build.go
-	#echo 'var LangEnvVar = "LANG"' >> internal/build/build.go
-
-	#GOOS=windows GOARCH=386    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.386.exe $(MAIN_GO)
-	#GOOS=windows GOARCH=amd64  go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.amd64.exe $(MAIN_GO)
-	#GOOS=windows GOARCH=arm    go build -ldflags="$(LDFLAGS)" -o dist/$(NAME).windows.arm.exe $(MAIN_GO)
 
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin/
