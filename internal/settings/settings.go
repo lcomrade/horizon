@@ -185,6 +185,7 @@ func Main() {
 	ArgConfigDir = flag.String("config-dir", "", locale.Config_dir_flag)
 	argInfo := flag.Bool("info", false, locale.Info_flag)
 	argVersion := flag.Bool("version", false, locale.Version_flag)
+	argHelp := flag.Bool("help", false, locale.Help_flag)
 	flag.Parse()
 
 	//Displaying the build information
@@ -201,6 +202,12 @@ func Main() {
 	//Displaying the version
 	if *argVersion == true {
 		fmt.Println(build.Name, build.Version)
+		os.Exit(0)
+	}
+
+	//Displaying the help
+	if *argHelp == true {
+		flag.PrintDefaults()
 		os.Exit(0)
 	}
 

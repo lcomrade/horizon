@@ -41,6 +41,7 @@ var Dir_flag = "Specifies the custom directory"
 var Config_dir_flag = "Specifies the custom directory with configuration files"
 var Info_flag = "Display build info and exit"
 var Version_flag = "Display version and exit"
+var Help_flag = "Help version and exit"
 
 var Go_top_tmpl = "Go top"
 var Name_tmpl = "Name"
@@ -70,6 +71,7 @@ func getTranslate() {
 		Config_dir_flag = "Указывает директорию с конфигурационными файлами"
 		Info_flag = "Напечатать информацию о сборке и выйти"
 		Version_flag = "Напечатать версию и выйти"
+		Help_flag = "Напечатать справку и выйти"
 
 		Go_top_tmpl = "Вверх"
 		Name_tmpl = "Название"

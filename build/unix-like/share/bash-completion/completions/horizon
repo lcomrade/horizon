@@ -5,13 +5,15 @@ _horizon_completions(){
 	fi
 
 	for i in ${COMP_WORDS[@]}; do
-	
+		if [ $i == "-info" ]; then
+			return
+	  	fi
+
 		if [ $i == "-version" ]; then
 			return
 	  	fi
-		
 
-		if [ $i == "-info" ]; then
+		if [ $i == "-help" ]; then
 			return
 	  	fi
 	done
