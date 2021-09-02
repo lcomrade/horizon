@@ -225,7 +225,18 @@
 	)
 	echo      }>> dist\%NAME%.json
 	echo   },>> dist\%NAME%.json
-	echo   "bin": "%NAME%.exe">> dist\%NAME%.json
+	echo   "bin": "%NAME%.exe",>> dist\%NAME%.json
+	
+	echo   "autoupdate": {>> dist\%NAME%.json
+	echo     "architecture": {>> dist\%NAME%.json
+	echo       "64bit": {>> dist\%NAME%.json
+	echo         "url": "https://github.com/lcomrade/horizon/releases/download/v$version/horizon.windows.amd64.zip">> dist\%NAME%.json
+	echo       },>> dist\%NAME%.json
+	echo       "32bit": {>> dist\%NAME%.json
+	echo         "url": "https://github.com/lcomrade/horizon/releases/download/v$version/horizon.windows.386.zip">> dist\%NAME%.json
+	echo       }>> dist\%NAME%.json
+	echo     }>> dist\%NAME%.json
+	echo   }>> dist\%NAME%.json
 	echo }>> dist\%NAME%.json
 	
 	@exit /B
