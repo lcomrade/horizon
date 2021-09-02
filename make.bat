@@ -31,9 +31,10 @@
 @if "%~1"=="uninstall" (Call :uninstall & exit /B)
 @if "%~1"=="installer" (Call :installer & exit /B)
 @if "%~1"=="choco" (Call :choco & exit /B)
+@if "%~1"=="scoop" (Call :scoop & exit /B)
 @if "%~1"=="clean" (Call :clean & exit /B)
 
-@echo Usage: %~0 [configure^|release^|install^|uninstall^|installer^|choco^|clean]...
+@echo Usage: %~0 [configure^|release^|install^|uninstall^|installer^|choco^|scoop^|clean]...
 @exit /B 2
 
 :all
@@ -190,6 +191,42 @@
 	cd build\windows\choco\
 	choco pack --outdir %BUILD_ROOT%\dist\
 	cd %BUILD_ROOT%
+	
+	@exit /B
+	
+:scoop
+	md dist\
+	echo {> dist\%NAME%.json
+	echo   "version": "%VERSION%",>> dist\%NAME%.json
+	echo   "license": "GPLv3+",>> dist\%NAME%.json
+	echo   "description": "Minimalist WEB-server for data transfer via HTTP",>> dist\%NAME%.json
+	echo   "homepage": "https://github.com/lcomrade/horizon/",>> dist\%NAME%.json
+	echo   "architecture": {>> dist\%NAME%.json
+	echo 	  "64bit": {>> dist\%NAME%.json
+	
+	if exist "dist\horizon.windows.amd64.zip" (
+		echo 		  "url": "https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.amd64.zip",>> dist\%NAME%.json
+		@for /F "tokens=*" %%i in ('checksum -t=sha256 -f=dist\horizon.windows.amd64.zip') do @set zip_amd64_sha256=%%i
+		echo 		  "hash": "%zip_amd64_sha256%">> dist\%NAME%.json
+		
+	) else (
+		echo 		  "url": "https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.amd64.zip">> dist\%NAME%.json
+	)
+	echo      },>> dist\%NAME%.json
+	echo      "32bit": {>> dist\%NAME%.json
+	
+	if exist "dist\horizon.windows.386.zip" (
+		echo 		  "url": "https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.386.zip",>> dist\%NAME%.json
+		@for /F "tokens=*" %%i in ('checksum -t=sha256 -f=dist\horizon.windows.386.zip') do @set zip_386_sha256=%%i
+		echo 		  "hash": "%zip_386_sha256%">> dist\%NAME%.json
+		
+	) else (
+		echo 		  "url": "https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.386.zip">> dist\%NAME%.json
+	)
+	echo      }>> dist\%NAME%.json
+	echo   },>> dist\%NAME%.json
+	echo   "bin": "%NAME%.exe">> dist\%NAME%.json
+	echo }>> dist\%NAME%.json
 	
 	@exit /B
 

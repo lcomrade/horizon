@@ -75,6 +75,11 @@ Builds nupkg package for chocolatey.
 
 **Environment variables**: `VERSION`
 
+## make scoop
+Create a json manifest for scoop.
+
+**Environment variables**: `VERSION`
+
 ## make clean
 Deletes all files created during configuration and build.
 
