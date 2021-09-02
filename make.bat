@@ -10,6 +10,7 @@
 
 @if %GO%=="" (set GO=go)
 @if %ISCC%=="" (set ISCC=ISCC)
+@if %ZIP%=="" (set ZIP=7z)
 
 @if "%GOOS%"=="" (
 	@for /F "tokens=*" %%i in ('%GO% env GOOS') do @set GOOS=%%i
@@ -74,9 +75,49 @@
 	
 	set GOARCH=arm
 	%GO% build -ldflags="%LDFLAGS%" -o dist\%NAME%.windows.arm.exe %MAIN_GO%
+	
+	
+	cd dist\
+	
+	md %NAME%.windows.386\
+	copy %BUILD_ROOT%\dist\%NAME%.windows.386.exe %NAME%.windows.386\%NAME%.exe
+	copy %BUILD_ROOT%\LICENSE %NAME%.windows.386\LICENSE.txt
+	copy %BUILD_ROOT%\README.md %NAME%.windows.386\README.md
+	md %NAME%.windows.386\docs\
+	copy %BUILD_ROOT%\docs\configure.md %NAME%.windows.386\docs\%NAME%-configure.md
+	copy %BUILD_ROOT%\docs\windows\%NAME%.txt %NAME%.windows.386\docs\%NAME%.txt
+	cd %NAME%.windows.386\
+	%ZIP% a -tzip -mx9 %BUILD_ROOT%\dist\%NAME%.windows.386.zip %NAME%.exe LICENSE.txt README.md docs\
+	cd ..
+	rd /S /Q %NAME%.windows.386\
+	
+	md %NAME%.windows.amd64\
+	copy %BUILD_ROOT%\dist\%NAME%.windows.amd64.exe %NAME%.windows.amd64\%NAME%.exe
+	copy %BUILD_ROOT%\LICENSE %NAME%.windows.amd64\LICENSE.txt
+	copy %BUILD_ROOT%\README.md %NAME%.windows.amd64\README.md
+	md %NAME%.windows.amd64\docs\
+	copy %BUILD_ROOT%\docs\configure.md %NAME%.windows.amd64\docs\%NAME%-configure.md
+	copy %BUILD_ROOT%\docs\windows\%NAME%.txt %NAME%.windows.amd64\docs\%NAME%.txt
+	cd %NAME%.windows.amd64\
+	%ZIP% a -tzip -mx9 %BUILD_ROOT%\dist\%NAME%.windows.amd64.zip %NAME%.exe LICENSE.txt README.md docs\
+	cd ..
+	rd /S /Q %NAME%.windows.amd64\
+	
+	md %NAME%.windows.arm\
+	copy %BUILD_ROOT%\dist\%NAME%.windows.arm.exe %NAME%.windows.arm\%NAME%.exe
+	copy %BUILD_ROOT%\LICENSE %NAME%.windows.arm\LICENSE.txt
+	copy %BUILD_ROOT%\README.md %NAME%.windows.arm\README.md
+	md %NAME%.windows.arm\docs\
+	copy %BUILD_ROOT%\docs\configure.md %NAME%.windows.arm\docs\%NAME%-configure.md
+	copy %BUILD_ROOT%\docs\windows\%NAME%.txt %NAME%.windows.arm\docs\%NAME%.txt
+	cd %NAME%.windows.arm\
+	%ZIP% a -tzip -mx9 %BUILD_ROOT%\dist\%NAME%.windows.arm.zip %NAME%.exe LICENSE.txt README.md docs\
+	cd ..
+	rd /S /Q %NAME%.windows.arm\
+	
+	cd %BUILD_ROOT%
 
 
-	md build\windows\
 	echo #define AppName "%NAME%" > build\windows\build.iss
 	echo #define AppVersion "%VERSION%" >> build\windows\build.iss
 	echo #define MAINTAINER "%MAINTAINER%" >> build\windows\build.iss
@@ -85,6 +126,11 @@
 
 	%ISCC% /DGOARCH=386 /O"%CD%\dist" /F"%NAME%.windows.386.setup" %MAIN_ISS%
 	%ISCC% /DGOARCH=amd64 /O"%CD%\dist" /F"%NAME%.windows.amd64.setup" %MAIN_ISS%
+	
+	
+	del /S /Q dist\%NAME%.windows.386.exe
+	del /S /Q dist\%NAME%.windows.amd64.exe
+	del /S /Q dist\%NAME%.windows.arm.exe
 	
 	
 	call make choco

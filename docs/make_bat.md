@@ -21,8 +21,10 @@ To get the full list of ldfalgs run `go tool link -ldfalgs`.
 
 `LDFLAGS` - go compiler flags (default: `-w -s`)
 
-## Inno Setup parameters
+## Inno Setup and 7-Zip
 `ISCC` - path to ISCC compiler (default: `ISCC`)
+
+`ZIP` - path to 7z.exe (default: `7z`)
 
 ## Installation paths
 `DESTDIR` - installation path (default: `%WINDIR%`)
