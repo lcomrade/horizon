@@ -20,6 +20,7 @@
 package logger
 
 import (
+	"../../pkg/colors"
 	"io/ioutil"
 	"log"
 	"os"
@@ -48,4 +49,12 @@ func SetLevel(level string) {
 	}
 
 	return
+}
+
+func UseColors() {
+	Info.SetPrefix(colors.Green + "INFO" + colors.Normal + "\t")
+	Warning.SetPrefix(colors.Yellow + "WARNING" + colors.Normal + "\t")
+	Error.SetPrefix(colors.Red + "ERROR" + colors.Normal + "\t")
+
+	Request.SetPrefix(colors.Blue + "REQUEST" + colors.Normal + "\t")
 }

@@ -172,6 +172,7 @@ func GetHtmlPageTemplate(indexHtmlFilePath string) *template.Template {
 //Global vars
 var ArgDir *string
 var ArgConfigDir *string
+var ArgNoColors *bool
 var Config ConfigType
 var HtmlTemplate *template.Template
 var ResourcesDir string
@@ -183,10 +184,16 @@ func Main() {
 	//Flags
 	ArgDir = flag.String("dir", ".", locale.Dir_flag)
 	ArgConfigDir = flag.String("config-dir", "", locale.Config_dir_flag)
+	ArgNoColors = flag.Bool("no-colors", false, locale.No_colors_flag)
 	argInfo := flag.Bool("info", false, locale.Info_flag)
 	argVersion := flag.Bool("version", false, locale.Version_flag)
 	argHelp := flag.Bool("help", false, locale.Help_flag)
 	flag.Parse()
+
+	//Console setup
+	if *ArgNoColors != true {
+		logger.UseColors()
+	}
 
 	//Displaying the build information
 	if *argInfo == true {

@@ -77,7 +77,7 @@ func ConvertFileSize(size int64) string {
 	}
 
 	sizeStr1, sizeStr2 := filesize.HumanReadable(size)
-	
+
 	if sizeStr2 == "TB" {
 		return sizeStr1 + " " + locale.TB
 	}
@@ -93,7 +93,7 @@ func ConvertFileSize(size int64) string {
 	if sizeStr2 == "KB" {
 		return sizeStr1 + " " + locale.KB
 	}
-	
+
 	return sizeStr1 + " " + sizeStr2
 }
 
@@ -204,6 +204,11 @@ func main() {
 
 	//Logging
 	logger.SetLevel(settings.Config.Logging.Level)
+
+	//Console setup
+	if *settings.ArgNoColors != true {
+		logger.UseColors()
+	}
 
 	//## WEB SERVER ##
 	//Handlers assignment

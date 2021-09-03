@@ -19,7 +19,7 @@ _horizon_completions(){
 	done
 
 
-	COMPREPLY=($(compgen -W "-config-dir -dir -info -version" -- "${COMP_WORDS[COMP_CWORD]}"))
+	COMPREPLY=($(compgen -W "-config-dir -dir -no-colors -info -version -help" -- "${COMP_WORDS[COMP_CWORD]}"))
 }
 
 complete -o nospace -F _horizon_completions horizon
