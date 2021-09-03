@@ -184,6 +184,7 @@ func Main() {
 	//Flags
 	ArgDir = flag.String("dir", ".", locale.Dir_flag)
 	ArgConfigDir = flag.String("config-dir", "", locale.Config_dir_flag)
+	argListen := flag.String("listen", "", locale.Listen_flag)
 	ArgNoColors = flag.Bool("no-colors", false, locale.No_colors_flag)
 	argInfo := flag.Bool("info", false, locale.Info_flag)
 	argVersion := flag.Bool("version", false, locale.Version_flag)
@@ -226,4 +227,9 @@ func Main() {
 
 	//Path to the folder with resources
 	ResourcesDir = GetFilePath("resources")
+
+	//Rewriting config parameters
+	if *argListen != "" {
+		Config.HttpServer.Listen = *argListen
+	}
 }
