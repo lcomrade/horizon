@@ -79,7 +79,7 @@ Source: "{#RootDir}\docs\configure.md"; DestDir: "{win}\Help\{#AppName}"; DestNa
 Source: "{#RootDir}\docs\windows\horizon.txt"; DestDir: "{win}\Help\{#AppName}"; DestName: "horizon.txt"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\{#AppName}"; Filename: "{win}\{#AppName}.exe"; WorkingDir: "{sd}"; Comment: "{#AppComment}"
+Name: "{group}\{#AppName}"; Filename: "{win}\{#AppName}.exe"; Parameters:"-no-colors"; WorkingDir: "{sd}"; Comment: "{#AppComment}"
 
 Name: "{group}\{cm:License}"; Filename: "{win}\Help\{#AppName}\LICENSE.txt"
 Name: "{group}\{#AppName} URL"; Filename: "{#AppURL}"
