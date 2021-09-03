@@ -154,6 +154,20 @@
 	@exit /B
 	
 :choco
+	@if exist "dist\horizon.windows.386.setup.exe" (
+		@for /F "tokens=*" %%i in ('checksum -t=sha256 -f=dist\horizon.windows.386.setup.exe') do @set setup_386_sha256=%%i
+	) else (
+		@echo Error: dist\horizon.windows.386.setup.exe does not exist
+		@exit /B 1
+	)
+	
+	@if exist "dist\horizon.windows.amd64.setup.exe" (
+		@for /F "tokens=*" %%i in ('checksum -t=sha256 -f=dist\horizon.windows.amd64.setup.exe') do @set setup_amd64_sha256=%%i
+	) else (
+		@echo Error: dist\horizon.windows.amd64.setup.exe does not exist
+		@exit /B 1
+	)
+
 	md build\windows\choco\
 	echo ^<^?xml version="1.0" encoding="utf-8"^?^> > build\windows\choco\%NAME%.nuspec
 	echo ^<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd"^> >> build\windows\choco\%NAME%.nuspec
@@ -173,19 +187,23 @@
 	echo ^</package^> >> build\windows\choco\%NAME%.nuspec
 	
 	md build\windows\choco\tools\
-	echo $ErrorActionPreference = 'Stop'; > build\windows\choco\tools\chocolateyinstall.ps1
-	echo $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)" >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo $packageArgs = @{ >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo   packageName   = $env:ChocolateyPackageName >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo   unzipLocation = $toolsDir >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo   fileType      = 'exe' >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo   url           = 'https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.386.setup.exe' >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo   url64bit      = 'https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.amd64.setup.exe' >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo   softwareName  = '%NAME%^*' >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo   silentArgs   = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-' >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo   validExitCodes= @(0) >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo } >> build\windows\choco\tools\chocolateyinstall.ps1
-	echo Install-ChocolateyPackage @packageArgs >> build\windows\choco\tools\chocolateyinstall.ps1
+	echo $ErrorActionPreference = 'Stop';> build\windows\choco\tools\chocolateyinstall.ps1
+	echo $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)">> build\windows\choco\tools\chocolateyinstall.ps1
+	echo $packageArgs = @{>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   packageName   = $env:ChocolateyPackageName>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   unzipLocation = $toolsDir>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   fileType      = 'exe'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   url           = 'https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.386.setup.exe'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   url64bit      = 'https://github.com/lcomrade/horizon/releases/download/v%VERSION%/horizon.windows.amd64.setup.exe'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   softwareName  = '%NAME%^*'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   checksum      = '%setup_386_sha256%'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   checksumType  = 'sha256'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   checksum64    = '%setup_amd64_sha256%'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   checksumType64= 'sha256'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   silentArgs   = '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART /SP-'>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo   validExitCodes= @(0)>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo }>> build\windows\choco\tools\chocolateyinstall.ps1
+	echo Install-ChocolateyPackage @packageArgs>> build\windows\choco\tools\chocolateyinstall.ps1
 	
 	md dist\
 	cd build\windows\choco\
