@@ -169,18 +169,24 @@
 	)
 
 	md build\windows\choco\
-	echo ^<^?xml version="1.0" encoding="utf-8"^?^> > build\windows\choco\%NAME%.nuspec
-	echo ^<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd"^> >> build\windows\choco\%NAME%.nuspec
-	echo   ^<metadata^> >> build\windows\choco\%NAME%.nuspec
-	echo     ^<id^>%NAME%^</id^> >> build\windows\choco\%NAME%.nuspec
-	echo     ^<version^>%VERSION%^</version^> >> build\windows\choco\%NAME%.nuspec
-	echo     ^<title^>%NAME% (Install)^</title^> >> build\windows\choco\%NAME%.nuspec
-	echo     ^<authors^>lcomrade^</authors^> >> build\windows\choco\%NAME%.nuspec
-	echo     ^<projectUrl^>https://github.com/lcomrade/horizon^</projectUrl^> >> build\windows\choco\%NAME%.nuspec
-	echo     ^<tags^>horizon cli web server command-line gplv3 file-sharing^</tags^> >> build\windows\choco\%NAME%.nuspec
-	echo     ^<summary^>Minimalist WEB-server for data transfer via HTTP^</summary^> >> build\windows\choco\%NAME%.nuspec
-	echo     ^<description^>Horizon - minimalist WEB-server for data transfer via HTTP^</description^> >> build\windows\choco\%NAME%.nuspec
-	echo   ^</metadata^> >> build\windows\choco\%NAME%.nuspec
+	echo ^<^?xml version="1.0" encoding="utf-8"^?^>> build\windows\choco\%NAME%.nuspec
+	echo ^<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd"^>>> build\windows\choco\%NAME%.nuspec
+	echo   ^<metadata^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<id^>%NAME%^</id^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<version^>%VERSION%^</version^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<title^>%NAME% (Install)^</title^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<authors^>lcomrade^</authors^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<projectUrl^>https://github.com/lcomrade/horizon^</projectUrl^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<licenseUrl^>https://github.com/lcomrade/horizon/blob/main/LICENSE^</licenseUrl^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<projectSourceUrl^>https://github.com/lcomrade/horizon/archive/refs/heads/main.zip^</projectSourceUrl^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<docsUrl^>https://github.com/lcomrade/horizon/tree/v%VERSION%/docs^</docsUrl^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<bugTrackerUrl^>https://github.com/lcomrade/horizon/issues^</bugTrackerUrl^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<tags^>horizon cli web server command-line gplv3 file-sharing^</tags^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<summary^>Minimalist WEB-server for data transfer via HTTP^</summary^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<description^>Horizon - minimalist WEB-server for data transfer via HTTP^</description^>>> build\windows\choco\%NAME%.nuspec
+	echo     ^<releaseNotes^>https://github.com/lcomrade/horizon/releases/tag/v%VERSION%^</releaseNotes^>>> build\windows\choco\%NAME%.nuspec
+	
+	echo   ^</metadata^>>> build\windows\choco\%NAME%.nuspec
 	echo   ^<files^> >> build\windows\choco\%NAME%.nuspec
 	echo     ^<file src="tools\**" target="tools" /^> >> build\windows\choco\%NAME%.nuspec
 	echo   ^</files^> >> build\windows\choco\%NAME%.nuspec
