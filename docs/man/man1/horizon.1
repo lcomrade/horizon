@@ -11,11 +11,14 @@ The program comes as a single binary file and can easily be ported to a UNIX-lik
 horizon [OPTIONS]...
 .PP
 .SH  OPTIONS
--config-dir
+-config-dir path
     Specifies the custom directory with configuration files
 .PP
--dir
+-dir path
     Specifies the custom root directory of the WEB server. Default: "."
+.PP
+-listen string
+    Port and IP address that the server will listen to. Example '-listen=":80"' - use port 80 and allow all IP.
 .PP
 -no-colors
     Disable colorized console output
