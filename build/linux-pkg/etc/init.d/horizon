@@ -19,7 +19,7 @@ case "$1" in
 		log_action_msg "Starting horizon"
 		mkdir -p /var/log/horizon/
 		mkdir -p /etc/horizon/share/
-		horizon -config-dir /etc/horizon/ -dir /etc/horizon/share/ >>/var/log/horizon/info.log 2>>/var/log/horizon/error.log
+		horizon -no-colors -config-dir /etc/horizon/ -dir /etc/horizon/share/ >>/var/log/horizon/info.log 2>>/var/log/horizon/error.log
 		exit $?
 		;;
 	stop)

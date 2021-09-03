@@ -91,7 +91,7 @@ Name: "{group}\{cm:Help}\{cm:Manual}"; Filename: "{win}\Help\{#AppName}\horizon.
 [Registry]
 ;; Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "LANG"; ValueData: "{cm:LANG}"; Flags: uninsdeletevalue
 Root: HKCR; Subkey: "Directory\Background\shell\{#AppName}"; ValueType: string; ValueData: "{cm:ShareWith} {#AppName}"; Flags: uninsdeletekey
-Root: HKCR; Subkey: "Directory\Background\shell\{#AppName}\command"; ValueType: string; ValueData: "horizon.exe -dir %V"; Flags: uninsdeletekey
+Root: HKCR; Subkey: "Directory\Background\shell\{#AppName}\command"; ValueType: string; ValueData: "horizon.exe -no-colors -dir %V"; Flags: uninsdeletekey
 
 [UninstallDelete]
 Type: files; Name: "{win}\{#AppName}.exe"
