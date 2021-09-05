@@ -38,14 +38,14 @@ Configures the project and prepares it for build.
 **Environment variables**: `VERSION`, `MAINTAINER`
 
 ## make
-Build project and man pages.
+Build project.
 
 **Environment variables**: `GO`, `GOOS`, `GOARCH`, `LDFLAGS`
 
 **Dependencies**: `make configure`
 
 ## make release
-Builds a project for all supported arch and OS, creates packages and creates an archive with man pages.
+Builds a project for all supported arch and OS, creates packages.
 
 **Environment variables**: `GO`, `LDFLAGS`
 
@@ -75,10 +75,14 @@ Builds nupkg package for chocolatey.
 
 **Environment variables**: `VERSION`
 
+**Dependencies**: `make`
+
 ## make scoop
 Create a json manifest for scoop.
 
 **Environment variables**: `VERSION`
+
+**Dependencies**: `make`
 
 ## make clean
 Deletes all files created during configuration and build.
