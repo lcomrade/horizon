@@ -28,7 +28,7 @@ Under Linux there are several options available. All of them can be found on the
 - Install from scoop:
 ```
 scoop bucket add lcomrade https://github.com/lcomrade/ScoopBucket
-scoop install <package name>
+scoop install horizon
 ```
 - Or download zip archive from [release page](https://github.com/lcomrade/horizon/releases/latest)
 
