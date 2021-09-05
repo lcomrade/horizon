@@ -17,7 +17,7 @@ The program comes as a single binary file and can easily be ported to a UNIX-lik
 
 ## Installation
 ### GNU/Linux
-Under Linux there are several options available. All of them can be found on the [release](https://github.com/lcomrade/horizon/releases/latest) page:
+Under Linux there are several options available. All of them can be found on the [release page](https://github.com/lcomrade/horizon/releases/latest):
 - DEB
 - RPM
 - Lonely binary
@@ -25,10 +25,10 @@ Under Linux there are several options available. All of them can be found on the
 ### Windows
 - Installer: [32bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.386.setup.exe) [64bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.amd64.setup.exe)
 - Install from chocolatey: `choco install -y horizon`
-- Or download lonely binary: [32bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.386.exe) [64bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.amd64.exe) [arm](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.arm.exe)
+- Or download zip archive from [release page](https://github.com/lcomrade/horizon/releases/latest)
 
 ### Another GNU/Linux or FreeBSD/OpenBSD/NetBSD
-1. Download a binary file for your OS and architecture from the [release](https://github.com/lcomrade/horizon/releases/latest) page
+1. Download a binary file for your OS and architecture from the [release page](https://github.com/lcomrade/horizon/releases/latest)
 2. Make the program executable
 3. Place program in `/usr/local/bin/` or in another directory provided for installing binary files
 
@@ -36,7 +36,7 @@ Under Linux there are several options available. All of them can be found on the
 
 ### Compiling from source code
 1. Install `Go`, `GNU Make` and `gzip`
-2. Download the source code from the [release](https://github.com/lcomrade/horizon/releases/latest) page
+2. Download the source code from the [release page](https://github.com/lcomrade/horizon/releases/latest)
 3. Unpack the source code
 4. Run: `make`
 5. Run as root: `make install`
