@@ -23,7 +23,8 @@ Under Linux there are several options available. All of them can be found on the
 - Lonely binary
 
 ### Windows
-- Installer: [32bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.386.setup.exe) [64bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.amd64.setup.exe)
+Under Windows there are several options available. All of them can be found on the [release page](https://github.com/lcomrade/horizon/releases/latest):
+- Installer
 - Install from chocolatey: `choco install -y horizon`
 - Install from scoop:
 ```
@@ -38,15 +39,6 @@ scoop install horizon
 3. Place program in `/usr/local/bin/` or in another directory provided for installing binary files
 
 `NOTE:` If you need man pages you can find it [here](https://github.com/lcomrade/horizon/releases/latest/download/man.tar)
-
-### Compiling from source code
-1. Install `Go`, `GNU Make` and `gzip`
-2. Download the source code from the [release page](https://github.com/lcomrade/horizon/releases/latest)
-3. Unpack the source code
-4. Run: `make`
-5. Run as root: `make install`
-
-`NOTE:` If you want to uninstall Horizon run as root: `make uninstall`
 
 ## Documentation
 ### Build
