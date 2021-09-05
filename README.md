@@ -25,6 +25,11 @@ Under Linux there are several options available. All of them can be found on the
 ### Windows
 - Installer: [32bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.386.setup.exe) [64bit](https://github.com/lcomrade/horizon/releases/latest/download/horizon.windows.amd64.setup.exe)
 - Install from chocolatey: `choco install -y horizon`
+- Install from scoop:
+```
+scoop bucket add lcomrade https://github.com/lcomrade/ScoopBucket
+scoop install <package name>
+```
 - Or download zip archive from [release page](https://github.com/lcomrade/horizon/releases/latest)
 
 ### Another GNU/Linux or FreeBSD/OpenBSD/NetBSD
