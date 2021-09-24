@@ -1,4 +1,4 @@
-# config.json
+# config.json (file)
 ## File example
 ```
 {
@@ -95,3 +95,41 @@ Sets the custom date and time format of the modification. Learn more about the d
 }
 
 ```
+
+# index.tmpl (file)
+If you want to write your own HTML page template, use the [GO documentation](https://pkg.go.dev/html/template). The example below shows the default template.
+## File example
+```
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{.Path}} - Horizon</title>
+  </head>
+  <body>
+    <h2>{{.Path}}</h2>
+    <p><a href={{.UpPath}}>Go top</a></p>
+    <table align='left' border=1 cellpadding=5>
+      <th align='left'>Name</th>
+      <th align='left'>Size (bit)</th>
+      <th align='left'>Mode</th>
+      <th align='left'>Modification time</th>
+      <th align='left'>Owner</th>
+      <th align='left'>Group</th>
+      {{range .Files}}
+        <tr>
+          <td><a href={{.Path}}>{{.Name}}</a></td>
+          <td>{{.Size}}</td>
+          <td>{{.Mode}}</td>
+          <td>{{.ModTime}}</td>
+          <td>{{.Owner}} ({{.Uid}})</td>
+          <td>{{.Group}} ({{.Gid}})</td>
+        </tr>
+      {{end}}
+    </table>
+  </body>
+</html>
+```
+
+# resources (dir)
+Contains custom resources that will be available but will not appear in the file list. For example it can be used for CSS styles or favicon.ico.
