@@ -1,0 +1,78 @@
+.TH "HORIZON-CONFIGS" "5" "24.09.2021" "Horizon 0.9" "Руководство по настройке Horizon"
+.SH  НАЗВАНИЕ
+Horizon \- руководство по настройке
+.PP
+.SH  ФАЙЛЫ И ДИРЕКТОРИИ
+Horizon использует файлы конфигурации, расположенные в директориях \fB$HOME/.config/horizon/\fR и \fB/etc/horizon/\fR. Список конфигурационных файлов:
+.PP
+\fBconfig.json (файл)\fR
+    Содержит основные настройки. Например: порт, на котором будет работать сервер.
+.PP
+\fBindex.tmpl (файл)\fR
+    Содержит шаблон html-страницы, которая будет отображаться в браузере.
+.PP
+\fBresources (директория)\fR
+    Содержит пользовательские ресурсы, которые будут доступны, но не будут отображаться в списке файлов. Например, они могут быть использованы для стилей CSS или favicon.ico.
+.PP
+.SH  config.json
+Здесь приведен пример конфигурационного файла со всеми значениями по умолчанию. Чтобы узнать больше, прочитайте \fB/usr/share/doc/horizon/configure.md\fR
+.PP
+.nf
+{
+  "HttpServer": {
+    "Listen":    ":8080",
+    "EnableTLS": false,
+    "CertFile":  "",
+    "KeyFile":   ""
+  },
+  "Logging": {
+  	"Level": "Info",
+  	"LogRequest": true,
+  	"Log404Request": true
+  },
+  "ShowHiddenFiles": false,
+  "HumanFileSize": true,
+  "ModTimeFormat": "2006 Jan 2 15:04"
+}
+.fi
+.PP
+\fB*\fR Используется формат даты и времени языка программирования GO. Подробнее: \fBhttps://golang.org/src/time/format.go\fR
+.PP
+.SH  index.tmpl
+Если вы хотите написать свой собственный шаблон HTML-страницы, воспользуйтесь документацией GO: \fBhttps://pkg.go.dev/html/template\fR . В примере ниже показан шаблон по умолчанию.
+.PP
+.nf
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{.Path}} - Horizon</title>
+  </head>
+  <body>
+    <h2>{{.Path}}</h2>
+    <p><a href={{.UpPath}}>Go top</a></p>
+    <table align='left' border=1 cellpadding=5>
+      <th align='left'>Название</th>
+      <th align='left'>Размер</th>
+      <th align='left'>Права</th>
+      <th align='left'>Время модификации</th>
+      <th align='left'>Владелец</th>
+      <th align='left'>Группа</th>
+      {{range .Files}}
+      <tr>
+        <td><a href={{.Path}}>{{.Name}}</a></td>
+        <td>{{.Size}}</td>
+        <td>{{.Mode}}</td>
+        <td>{{.ModTime}}</td>
+        <td>{{.Owner}} ({{.Uid}})</td>
+        <td>{{.Group}} ({{.Gid}})</td>
+      </tr>
+      {{end}}
+    </table>
+  </body>
+</html>
+.fi
+.PP
+.SH  СМОТРИТЕ ТАКЖЕ
+\fBhorizon\fR(1)
+.PP
