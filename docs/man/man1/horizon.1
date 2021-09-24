@@ -50,9 +50,13 @@ To rotate logs you can use logrotate.
 Horizon supports symbolic links.
 .PP
 .SH  SYSTEMD SERVICE
-You can run Horizon in the background using systemd. Place in /etc/horizon/share a symbolic link to the directories and files you want to share. And in /etc/horizon the configuration files.
+You can run Horizon in the background using systemd.
 .PP
-Now turn on service:
+\fB1)\fR Place in /etc/horizon/share a symbolic link to the directories and files you want to share.
+.PP
+\fB2)\fR Edit configuration files in /etc/horizon/.
+.PP
+\fB3)\fR Now enable and start service:
 .nf
 systemctl enable horizon
 systemctl start horizon
