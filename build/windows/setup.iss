@@ -77,6 +77,7 @@ Source: "{#RootDir}\LICENSE"; DestDir: "{win}\Help\{#AppName}"; DestName: "LICEN
 Source: "{#RootDir}\README.md"; DestDir: "{win}\Help\{#AppName}"; DestName: "README.md"; Flags: ignoreversion
 Source: "{#RootDir}\docs\configure.md"; DestDir: "{win}\Help\{#AppName}"; DestName: "horizon-configure.md"; Flags: ignoreversion
 Source: "{#RootDir}\docs\windows\horizon.txt"; DestDir: "{win}\Help\{#AppName}"; DestName: "horizon.txt"; Flags: ignoreversion
+Source: "{#RootDir}\docs\windows\horizon.ru.txt"; DestDir: "{win}\Help\{#AppName}"; DestName: "horizon.ru.txt"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#AppName}"; Filename: "{win}\{#AppName}.exe"; Parameters:"-no-colors"; WorkingDir: "{sd}"; Comment: "{#AppComment}"
@@ -87,6 +88,7 @@ Name: "{group}\{#AppName} URL"; Filename: "{#AppURL}"
 Name: "{group}\{cm:Help}\README.md"; Filename: "{win}\Help\{#AppName}\README.md"
 Name: "{group}\{cm:Help}\configure.md"; Filename: "{win}\Help\{#AppName}\horizon-configure.md"
 Name: "{group}\{cm:Help}\{cm:Manual}"; Filename: "{win}\Help\{#AppName}\horizon.txt"
+Name: "{group}\{cm:Help}\{cm:Manual} (RU)"; Filename: "{win}\Help\{#AppName}\horizon.ru.txt"
 
 [Registry]
 ;; Root: HKLM; Subkey: "SYSTEM\CurrentControlSet\Control\Session Manager\Environment"; ValueType: string; ValueName: "LANG"; ValueData: "{cm:LANG}"; Flags: uninsdeletevalue
