@@ -87,6 +87,7 @@
 	md %NAME%.windows.386\docs\
 	copy %BUILD_ROOT%\docs\configure.md %NAME%.windows.386\docs\%NAME%-configure.md
 	copy %BUILD_ROOT%\docs\windows\%NAME%.txt %NAME%.windows.386\docs\%NAME%.txt
+	copy %BUILD_ROOT%\docs\windows\%NAME%.ru.txt %NAME%.windows.386\docs\%NAME%.ru.txt
 	cd %NAME%.windows.386\
 	%ZIP% a -tzip -mx9 %BUILD_ROOT%\dist\%NAME%.windows.386.zip %NAME%.exe LICENSE.txt README.md docs\
 	cd ..
@@ -99,6 +100,7 @@
 	md %NAME%.windows.amd64\docs\
 	copy %BUILD_ROOT%\docs\configure.md %NAME%.windows.amd64\docs\%NAME%-configure.md
 	copy %BUILD_ROOT%\docs\windows\%NAME%.txt %NAME%.windows.amd64\docs\%NAME%.txt
+	copy %BUILD_ROOT%\docs\windows\%NAME%.ru.txt %NAME%.windows.amd64\docs\%NAME%.ru.txt
 	cd %NAME%.windows.amd64\
 	%ZIP% a -tzip -mx9 %BUILD_ROOT%\dist\%NAME%.windows.amd64.zip %NAME%.exe LICENSE.txt README.md docs\
 	cd ..
@@ -111,6 +113,7 @@
 	md %NAME%.windows.arm\docs\
 	copy %BUILD_ROOT%\docs\configure.md %NAME%.windows.arm\docs\%NAME%-configure.md
 	copy %BUILD_ROOT%\docs\windows\%NAME%.txt %NAME%.windows.arm\docs\%NAME%.txt
+	copy %BUILD_ROOT%\docs\windows\%NAME%.ru.txt %NAME%.windows.arm\docs\%NAME%.ru.txt
 	cd %NAME%.windows.arm\
 	%ZIP% a -tzip -mx9 %BUILD_ROOT%\dist\%NAME%.windows.arm.zip %NAME%.exe LICENSE.txt README.md docs\
 	cd ..
