@@ -29,6 +29,7 @@ import (
 	"flag"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 )
@@ -169,6 +170,20 @@ func GetHtmlPageTemplate(indexHtmlFilePath string) *template.Template {
 	return htmlPageTemplate
 }
 
+//Print Help
+func PrintHelp() {
+	fmt.Println(locale.Usage_flag)
+	fmt.Println(`
+-dir        ` + locale.Dir_flag + `
+-config-dir ` + locale.Config_dir_flag + `
+-listen     ` + locale.Listen_flag + `
+-no-colors  ` + locale.No_colors_flag + `
+
+-info       ` + locale.Info_flag + `
+-version    ` + locale.Version_flag + `
+-help       ` + locale.Help_flag)
+}
+
 //Global vars
 var ArgDir *string
 var ArgConfigDir *string
@@ -182,14 +197,24 @@ func Main() {
 	logger.SetLevel(Config.Logging.Level)
 
 	//Flags
-	ArgDir = flag.String("dir", ".", locale.Dir_flag)
-	ArgConfigDir = flag.String("config-dir", "", locale.Config_dir_flag)
-	argListen := flag.String("listen", "", locale.Listen_flag)
-	ArgNoColors = flag.Bool("no-colors", false, locale.No_colors_flag)
-	argInfo := flag.Bool("info", false, locale.Info_flag)
-	argVersion := flag.Bool("version", false, locale.Version_flag)
-	argHelp := flag.Bool("help", false, locale.Help_flag)
-	flag.Parse()
+	flagSet := flag.NewFlagSet(build.Name, flag.ContinueOnError)
+	flagSet.SetOutput(ioutil.Discard)
+
+	ArgDir = flagSet.String("dir", ".", locale.Dir_flag)
+	ArgConfigDir = flagSet.String("config-dir", "", locale.Config_dir_flag)
+	argListen := flagSet.String("listen", "", locale.Listen_flag)
+	ArgNoColors = flagSet.Bool("no-colors", false, locale.No_colors_flag)
+	argInfo := flagSet.Bool("info", false, locale.Info_flag)
+	argVersion := flagSet.Bool("version", false, locale.Version_flag)
+	argHelp := flagSet.Bool("help", false, locale.Help_flag)
+
+	err := flagSet.Parse(os.Args[1:])
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println("")
+		PrintHelp()
+		os.Exit(2)
+	}
 
 	//Console setup
 	if *ArgNoColors != true {
@@ -215,7 +240,7 @@ func Main() {
 
 	//Displaying the help
 	if *argHelp == true {
-		flag.PrintDefaults()
+		PrintHelp()
 		os.Exit(0)
 	}
 

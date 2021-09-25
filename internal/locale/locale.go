@@ -38,6 +38,7 @@ var KEY_file_does_not_exist = "KEY file does not exist"
 var Load_file = "Load file"
 var Env_var_is_empty = "environment variable is empty"
 
+var Usage_flag = "Usage: " + build.Name + " [OPTIONS]..."
 var Dir_flag = "Specifies the custom directory"
 var Config_dir_flag = "Specifies the custom directory with configuration files"
 var Listen_flag = "Port and IP address that the server will listen to"
@@ -70,6 +71,8 @@ func getTranslate() {
 		// internal/settings.go
 		Load_file = "Файл загружен"
 		Env_var_is_empty = "переменная окружения пуста"
+
+		Usage_flag = "Использование: " + build.Name + " [ОПЦИИ]..."
 		Dir_flag = "Указывает директорию"
 		Config_dir_flag = "Указывает директорию с конфигурационными файлами"
 		Listen_flag = "Порт и IP-адрес, которые будет прослушивать сервер"
