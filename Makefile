@@ -32,10 +32,17 @@ all:
 	make docs
 
 man:
+	# EN MAN
 	mkdir -p dist/man/man1/
 	gzip -9 --no-name --force -c docs/man/man1/horizon.1 > dist/man/man1/horizon.1.gz
 	mkdir -p dist/man/man5/
 	gzip -9 --no-name --force -c docs/man/man5/horizon-configs.5 > dist/man/man5/horizon-configs.5.gz
+
+	# RU MAN
+	mkdir -p dist/man/ru/man1/
+	gzip -9 --no-name --force -c docs/man/ru/man1/horizon.1 > dist/man/ru/man1/horizon.1.gz
+	mkdir -p dist/man/ru/man5/
+	gzip -9 --no-name --force -c docs/man/ru/man5/horizon-configs.5 > dist/man/ru/man5/horizon-configs.5.gz
 
 docs:
 	mkdir -p dist/docs/
@@ -111,10 +118,8 @@ install:
 
 	cp -r build/unix-like/* $(DESTDIR)$(PREFIX)/
 
-	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1/
-	cp dist/man/man1/horizon.1.gz $(DESTDIR)$(PREFIX)/share/man/man1/horizon.1.gz
-	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man5/
-	cp dist/man/man5/horizon-configs.5.gz $(DESTDIR)$(PREFIX)/share/man/man5/horizon-configs.5.gz
+	mkdir -p $(DESTDIR)$(PREFIX)/share/man/
+	cp -r dist/man/* $(DESTDIR)$(PREFIX)/share/man/
 
 uninstall:
 	rm $(DESTDIR)$(PREFIX)/bin/$(NAME)
@@ -123,6 +128,8 @@ uninstall:
 	
 	rm $(DESTDIR)$(PREFIX)/share/man/man1/horizon.1.gz
 	rm $(DESTDIR)$(PREFIX)/share/man/man5/horizon-configs.5.gz
+	rm $(DESTDIR)$(PREFIX)/share/man/ru/man1/horizon.1.gz
+	rm $(DESTDIR)$(PREFIX)/share/man/ru/man5/horizon-configs.5.gz
 
 deb:
 	mkdir -p $(TMP_BUILD_DIR)/$(NAME).$(GOOS).$(GOARCH)/
@@ -218,6 +225,7 @@ rpm:
 	echo '/etc/logrotate.d/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%doc /usr/share/doc/$(NAME)/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%doc /usr/share/man/man?/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
+	echo '%doc /usr/share/man/ru/man?/*' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '%changelog' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
 	echo '* $(shell date "+%a %b %d %Y") $(MAINTAINER) - $(VERSION)-1' >> $(TMP_BUILD_DIR)/SPECS/$(NAME).spec
