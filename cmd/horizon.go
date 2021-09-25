@@ -60,7 +60,7 @@ func GetPathToResource(fileName string) string {
 		return path
 	}
 
-	return filepath.Join(*settings.ArgDir, fileName)
+	return filepath.Join(settings.ArgDir, fileName)
 }
 
 func IsHide(fileName string) bool {
@@ -206,7 +206,7 @@ func main() {
 	logger.SetLevel(settings.Config.Logging.Level)
 
 	//Console setup
-	if *settings.ArgNoColors != true {
+	if settings.ArgNoColors != true {
 		logger.UseColors()
 	}
 

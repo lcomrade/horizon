@@ -77,8 +77,8 @@ var ConfigDefault = ConfigType{
 
 //Get the path to the file. Can return an empty string.
 func GetFilePath(fileName string) string {
-	if *ArgConfigDir != "" {
-		path := filepath.Join(*ArgConfigDir, fileName)
+	if ArgConfigDir != "" {
+		path := filepath.Join(ArgConfigDir, fileName)
 
 		_, err := os.Stat(path)
 		if err == nil {
@@ -185,9 +185,9 @@ func PrintHelp() {
 }
 
 //Global vars
-var ArgDir *string
-var ArgConfigDir *string
-var ArgNoColors *bool
+var ArgDir string
+var ArgConfigDir string
+var ArgNoColors bool
 var Config ConfigType
 var HtmlTemplate *template.Template
 var ResourcesDir string
@@ -200,10 +200,10 @@ func Main() {
 	flagSet := flag.NewFlagSet(build.Name, flag.ContinueOnError)
 	flagSet.SetOutput(ioutil.Discard)
 
-	ArgDir = flagSet.String("dir", ".", locale.Dir_flag)
-	ArgConfigDir = flagSet.String("config-dir", "", locale.Config_dir_flag)
+	ArgDir = *flagSet.String("dir", ".", locale.Dir_flag)
+	ArgConfigDir = *flagSet.String("config-dir", "", locale.Config_dir_flag)
 	argListen := flagSet.String("listen", "", locale.Listen_flag)
-	ArgNoColors = flagSet.Bool("no-colors", false, locale.No_colors_flag)
+	ArgNoColors = *flagSet.Bool("no-colors", false, locale.No_colors_flag)
 	argInfo := flagSet.Bool("info", false, locale.Info_flag)
 	argVersion := flagSet.Bool("version", false, locale.Version_flag)
 	argHelp := flagSet.Bool("help", false, locale.Help_flag)
@@ -217,7 +217,7 @@ func Main() {
 	}
 
 	//Console setup
-	if *ArgNoColors != true {
+	if ArgNoColors != true {
 		logger.UseColors()
 	}
 

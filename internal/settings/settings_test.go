@@ -17,7 +17,9 @@ var mainRun = false
 
 func MakeMain() {
 	if mainRun == false {
-		Main()
+		//Main()
+		ArgConfigDir = ""
+
 		mainRun = true
 	}
 }
