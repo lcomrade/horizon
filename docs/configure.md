@@ -97,8 +97,8 @@ Sets the custom date and time format of the modification. Learn more about the d
 ```
 
 # index.tmpl (file)
-If you want to write your own HTML page template, use the [GO documentation](https://pkg.go.dev/html/template). The example below shows the default template.
-## File example
+If you want to write your own HTML page template, use the [GO documentation](https://pkg.go.dev/html/template). The example below shows the template example.
+## Template example
 ```
 <!doctype html>
 <html>
@@ -130,6 +130,11 @@ If you want to write your own HTML page template, use the [GO documentation](htt
   </body>
 </html>
 ```
+
+## Default templates
+The templates used by default are in the source code:
+- UNIX-like: `./internal/settings/settings_unix.go`
+- Windows: `./internal/settings/settings_windows.go`
 
 # resources (dir)
 Contains custom resources that will be available but will not appear in the file list. For example it can be used for CSS styles or favicon.ico.
